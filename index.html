@@ -31,11 +31,11 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-html, body {
-    width: 100%;
-    overflow-x: hidden; /* Crucial: Applies to both */
-    position: relative; /* Helps contain absolute elements */
-}
+        html, body {
+            width: 100%;
+            overflow-x: hidden; /* Crucial: Applies to both */
+            position: relative; /* Helps contain absolute elements */
+        }
         body {
             background-color: var(--black);
             color: var(--white);
@@ -294,9 +294,10 @@ html, body {
             flex-wrap: wrap;
         }
 
-       /* --- 5. INFO TICKER --- */
+       /* --- 5. INFO TICKER (FIXED) --- */
         .ticker-wrap {
-            width: 98%; /* Changed from 99% to prevent cut-off */
+            width: 98%; /* EXACTLY 98% AS REQUESTED */
+            margin: 1rem auto; /* Centers the 98% width */
             overflow: hidden; 
             background: var(--yellow);
             padding: 1rem 0;
@@ -307,7 +308,6 @@ html, body {
             position: relative;
             z-index: 10;
             touch-action: none; 
-            /* Optional: Adds a fade effect to the edges */
             -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
             mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
         }
@@ -317,17 +317,19 @@ html, body {
             white-space: nowrap;
             /* CRITICAL FIX: Forces width to match content length */
             width: max-content; 
-            animation: marquee 40s linear infinite; /* Slowed down slightly for better readability */
+            animation: marquee 40s linear infinite;
         }
         
         .ticker-item {
             display: inline-flex;
             align-items: center;
-            padding: 0 3rem; /* Increased padding for better spacing */
+            padding: 0 3rem;
             font-family: var(--font-display);
             font-size: 1.5rem;
             color: var(--black);
             text-transform: uppercase;
+            /* CRITICAL MOBILE FIX: PREVENTS TEXT SQUISHING */
+            flex-shrink: 0;
         }
         
         .ticker-item i {
@@ -814,4 +816,4 @@ html, body {
         setInterval(checkOpenStatus, 60000);
     </script>
 </body>
-</html>^
+</html>
