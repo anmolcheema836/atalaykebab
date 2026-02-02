@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atalay Kebab Van | Since 1988</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Prata&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- 1. EDITORIAL THEME --- */
+        :root {
+            --bg-color: #F9F7F2; /* Cream/Off-White */
+            --text-main: #2C2C2C; /* Charcoal */
+            --accent-red: #D22020; /* Classic Red */
+            --accent-gold: #C5A059;
+            --white: #ffffff;
+            --border: 1px solid rgba(0,0,0,0.08);
+            
+            --font-serif: 'Prata', serif;
+            --font-sans: 'Lato', sans-serif;
+            
+            --container: 1300px;
+            --ease: cubic-bezier(0.65, 0, 0.35, 1);
+        }
+
+        /* --- 2. BASE --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html { scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-serif);
+            font-weight: 400;
+            line-height: 1.15;
+            color: var(--text-main);
+        }
+
+        h1 { font-size: clamp(3.5rem, 8vw, 6rem); }
+        h2 { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 2rem; }
+        
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        ul { list-style: none; }
+
+        /* --- 3. COMPONENTS --- */
+        
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: var(--text-main);
+            color: var(--white);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 1px solid var(--text-main);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: 0.4s var(--ease);
+        }
+        
+        .btn:hover {
+            background: transparent;
+            color: var(--text-main);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--text-main);
+        }
+        .btn-outline:hover {
+            background: var(--text-main);
+            color: var(--white);
+        }
+
+        /* Wrapper */
+        .wrapper {
+            max-width: var(--container);
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Badge */
+        .badge {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-red);
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--accent-red);
+            padding-bottom: 3px;
+        }
+
+        /* --- 4. NAVIGATION (Minimalist Sticky) --- */
+        nav {
+            position: fixed; top: 0; width: 100%; height: 90px;
+            background: rgba(249, 247, 242, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: var(--border);
+            z-index: 1000;
+            display: flex; align-items: center;
+        }
+
+        .nav-inner {
+            display: flex; justify-content: space-between; align-items: center; width: 100%;
+        }
+
+        .logo { font-family: var(--font-serif); font-size: 1.8rem; color: var(--text-main); display: flex; align-items: center; gap: 10px; }
+        .logo img { height: 40px; width: auto; }
+        .logo span { color: var(--accent-red); }
+
+        .nav-menu { display: flex; gap: 3rem; align-items: center; }
+        .nav-menu a { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: #666; position: relative; }
+        .nav-menu a::after {
+            content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 1px; background: var(--accent-red); transition: 0.3s;
+        }
+        .nav-menu a:hover::after { width: 100%; }
+        .nav-menu a:hover { color: var(--text-main); }
+
+        .hamburger { display: none; font-size: 1.5rem; cursor: pointer; color: var(--text-main); }
+
+        /* Mobile Menu */
+        .mobile-overlay {
+            position: fixed; inset: 0; background: var(--bg-color); z-index: 999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 2rem;
+            transform: translateY(-100%); transition: 0.6s var(--ease);
+        }
+        .mobile-overlay.active { transform: translateY(0); }
+        .mobile-overlay a { font-family: var(--font-serif); font-size: 2.5rem; color: var(--text-main); }
+
+        /* --- 5. HERO (Clean Split) --- */
+        .hero {
+            padding-top: 90px;
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            align-items: center;
+        }
+
+        .hero-text { padding: 4rem 6rem 4rem 0; position: relative; }
+        .hero-text p { font-size: 1.1rem; color: #555; max-width: 500px; margin-bottom: 3rem; }
+
+        .hero-image {
+            height: 85vh;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-image img {
+            transition: transform 1.5s var(--ease);
+            transform: scale(1.1);
+        }
+        .hero:hover .hero-image img { transform: scale(1); }
+
+        /* Floating Info Box */
+        .float-box {
+            position: absolute; bottom: 4rem; left: -3rem;
+            background: var(--white); padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+            max-width: 250px;
+        }
+        .float-box strong { display: block; font-family: var(--font-serif); font-size: 1.2rem; margin-bottom: 0.5rem; }
+        .float-box span { font-size: 0.9rem; color: #666; }
+
+        /* --- 6. HERITAGE (Editorial) --- */
+        .heritage { padding: 10rem 0; text-align: center; }
+        .heritage-content { max-width: 800px; margin: 0 auto; }
+        .dropcap {
+            float: left; font-family: var(--font-serif); font-size: 5rem; line-height: 0.8;
+            margin-right: 1rem; color: var(--accent-red);
+        }
+        
+        .awards-strip {
+            display: flex; justify-content: center; gap: 4rem; margin-top: 4rem;
+            border-top: 1px solid rgba(0,0,0,0.1); padding-top: 2rem;
+        }
+        .award-item { text-align: center; }
+        .award-item i { color: var(--accent-gold); font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .award-item p { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* --- 7. MENU (Clean Cards) --- */
+        .menu-section { background: var(--white); padding: 8rem 0; }
+        .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem; }
+
+        .menu-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;
+        }
+
+        .menu-card {
+            background: var(--bg-color);
+            transition: 0.4s var(--ease);
+            cursor: pointer;
+        }
+        .menu-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
+
+        .card-img { height: 350px; overflow: hidden; }
+        .card-img img { transition: 0.6s; }
+        .menu-card:hover .card-img img { transform: scale(1.05); }
+
+        .card-body { padding: 2.5rem; }
+        .card-title { font-size: 1.5rem; margin-bottom: 0.5rem; display: flex; justify-content: space-between; }
+        .card-price { font-family: var(--font-sans); font-size: 1rem; color: var(--accent-red); font-weight: 700; }
+        .card-desc { font-size: 0.9rem; color: #666; margin-top: 1rem; }
+
+        /* --- 8. FILMING & EXPANSION (Side by Side) --- */
+        .split-features { display: grid; grid-template-columns: 1fr 1fr; }
+
+        .feature-block {
+            padding: 8rem 4rem;
+            display: flex; flex-direction: column; justify-content: center;
+        }
+        .feature-dark { background: var(--text-main); color: var(--white); }
+        .feature-dark h2 { color: var(--white); }
+        .feature-dark p { color: #aaa; }
+        
+        .feature-light { background: #EFECE6; }
+
+        /* --- 9. LOCATIONS --- */
+        .locations { padding: 8rem 0; }
+        .loc-wrapper { display: grid; grid-template-columns: 1fr 1.5fr; gap: 4rem; align-items: start; }
+
+        .loc-details h3 { font-size: 2rem; margin-bottom: 1.5rem; }
+        .loc-meta { margin-bottom: 2rem; }
+        .loc-meta label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: #888; display: block; margin-bottom: 0.5rem; }
+        .loc-meta p { font-size: 1.1rem; }
+
+        .map-frame {
+            height: 500px; background: #eee; position: relative;
+        }
+        .map-frame img { filter: grayscale(100%); opacity: 0.8; }
+
+        /* --- 10. FOOTER (Minimal) --- */
+        footer {
+            padding: 4rem 0; border-top: var(--border); text-align: center; font-size: 0.9rem; color: #666;
+        }
+        .footer-logo { font-family: var(--font-serif); font-size: 2rem; color: var(--text-main); margin-bottom: 2rem; display: block; }
+        .footer-links { margin-bottom: 2rem; }
+        .footer-links a { margin: 0 1rem; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem; }
+        .footer-links a:hover { color: var(--accent-red); }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 1024px) {
+            .hero { grid-template-columns: 1fr; padding-top: 120px; }
+            .hero-image { height: 50vh; order: -1; margin-bottom: 3rem; }
+            .hero-text { padding: 0; text-align: center; }
+            .hero-text p { margin: 0 auto 2rem; }
+            .float-box { display: none; }
+            
+            .menu-grid { grid-template-columns: 1fr; }
+            .split-features { grid-template-columns: 1fr; }
+            .loc-wrapper { grid-template-columns: 1fr; }
+            
+            .nav-menu { display: none; }
+            .hamburger { display: block; }
+        }
+
+        /* --- ANIMATIONS --- */
+        .reveal-text {
+            opacity: 0; transform: translateY(20px); transition: 1s var(--ease);
+        }
+        .reveal-text.active { opacity: 1; transform: translateY(0); }
+
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="wrapper nav-inner">
+            <a href="#" class="logo">
+                <img src="logo.png" alt="logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+                <span style="display:none;">ATALAY</span>
+            </a>
+
+            <div class="nav-menu">
+                <a href="#about">Heritage</a>
+                <a href="#menu">Menu</a>
+                <a href="#locations">Locations</a>
+                <a href="#filming">Filming</a>
+                <a href="#contact">Pitch</a>
+                <a href="#order" class="btn">Order Now</a>
+            </div>
+
+            <div class="hamburger" onclick="toggleMenu()">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <div class="mobile-overlay" id="mobileMenu">
+        <a href="#about" onclick="toggleMenu()">Heritage</a>
+        <a href="#menu" onclick="toggleMenu()">Menu</a>
+        <a href="#locations" onclick="toggleMenu()">Locations</a>
+        <a href="#filming" onclick="toggleMenu()">Filming</a>
+        <a href="#contact" onclick="toggleMenu()">Pitch & Events</a>
+        <a href="#order" onclick="toggleMenu()" style="color: var(--accent-red);">Order Online</a>
+    </div>
+
+    <section class="wrapper hero">
+        <div class="hero-text reveal">
+            <span class="badge">Est. 1988 — Thame, UK</span>
+            <h1>The Modern<br>British Classic.</h1>
+            <p>
+                Award-winning street food. We blend authentic Turkish tradition with a uniquely British twist. Hand-stacked meat, fresh ingredients, and a chilli sauce recipe that’s kept secret for 38 years.
+            </p>
+            <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; md:justify-content: flex-start;">
+                <a href="#menu" class="btn">View Menu</a>
+                <a href="#order" class="btn-outline">Order Online</a>
+            </div>
+        </div>
+        <div class="hero-image reveal">
+            <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=1974&auto=format&fit=crop" alt="The Van">
+            <div class="float-box">
+                <strong>Open Tonight</strong>
+                <span>Until 11:00 PM<br>Market House, Thame</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="heritage">
+        <div class="wrapper">
+            <div class="heritage-content reveal">
+                <span class="badge">Our Story</span>
+                <h2>Good Food, Fast.</h2>
+                <p style="font-size: 1.2rem; color: #444; line-height: 1.8;">
+                    <span class="dropcap">F</span>ounded by Resul Atalay in 1988, we set out to change the perception of the kebab. It’s not just late-night fuel; it’s a craft. We don't believe in processed fillers. We hand-stack our doner meat every single morning, chop our salads fresh, and serve every customer with the warmth of a family business.
+                </p>
+                
+                <div class="awards-strip">
+                    <div class="award-item">
+                        <i class="fa-solid fa-trophy"></i>
+                        <p>Best Kebab Van 2017</p>
+                    </div>
+                    <div class="award-item">
+                        <i class="fa-solid fa-trophy"></i>
+                        <p>Best Kebab Van 2018</p>
+                    </div>
+                    <div class="award-item">
+                        <i class="fa-solid fa-star"></i>
+                        <p>5 Star Hygiene</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="menu" class="menu-section">
+        <div class="wrapper">
+            <div class="section-header reveal">
+                <h2>The Menu</h2>
+                <a href="#order" style="border-bottom: 1px solid var(--text-main);">Download PDF Menu</a>
+            </div>
+
+            <div class="menu-grid">
+                <div class="menu-card reveal">
+                    <div class="card-img">
+                        <img src="https://images.unsplash.com/photo-1629854497576-9d628d0979d3?q=80&w=1000&auto=format&fit=crop" alt="Doner">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h3>Lamb Doner</h3>
+                            <span class="card-price">£9.60</span>
+                        </div>
+                        <p class="card-desc">The signature. Slow-roasted lamb, sliced thin and served in pitta with salad & sauce.</p>
+                    </div>
+                </div>
+
+                <div class="menu-card reveal">
+                    <div class="card-img">
+                        <img src="https://images.unsplash.com/photo-1603360946369-dc9bb6f54262?q=80&w=1000&auto=format&fit=crop" alt="Shish">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h3>Chicken Shish</h3>
+                            <span class="card-price">£10.50</span>
+                        </div>
+                        <p class="card-desc">Lean marinated chicken breast grilled over charcoal. Smoky, spicy, tender.</p>
+                    </div>
+                </div>
+
+                <div class="menu-card reveal">
+                    <div class="card-img">
+                        <img src="https://images.unsplash.com/photo-1594007773226-e19bc8112002?q=80&w=1000&auto=format&fit=crop" alt="Burger">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h3>1/4 Pounder</h3>
+                            <span class="card-price">£6.00</span>
+                        </div>
+                        <p class="card-desc">British classic beef burger with cheese, onions, and ketchup.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="split-features">
+        <div id="filming" class="feature-block feature-dark reveal">
+            <span class="badge" style="color: var(--white); border-color: var(--white);">Production</span>
+            <h2 style="margin-top: 1rem;">As Seen On Screen</h2>
+            <p>
+                Looking for an iconic British street food backdrop? The Atalay van offers a visually striking, authentic setting for Film, TV, and Commercial productions.
+            </p>
+            <br>
+            <a href="#contact" class="btn" style="border-color: var(--white); background: var(--white); color: var(--text-main);">Make Filming Enquiry</a>
+        </div>
+        <div id="contact" class="feature-block feature-light reveal">
+            <span class="badge">Business</span>
+            <h2 style="margin-top: 1rem;">Pitch & Events</h2>
+            <p>
+                Want to hire us for a private event, or have a location idea? Use the form below to get in touch with our team.
+            </p>
+            <br>
+            <form style="display: grid; gap: 1rem; max-width: 400px;">
+                <input type="text" placeholder="Name" style="padding: 10px; border: 1px solid #ccc; background: transparent;">
+                <input type="email" placeholder="Email" style="padding: 10px; border: 1px solid #ccc; background: transparent;">
+                <button class="btn">Send Pitch</button>
+            </form>
+        </div>
+    </section>
+
+    <section id="locations" class="locations">
+        <div class="wrapper loc-wrapper">
+            <div class="loc-details reveal">
+                <span class="badge">Find Us</span>
+                <h2>Locations</h2>
+                
+                <div style="margin-bottom: 3rem;">
+                    <h3>Thame (HQ)</h3>
+                    <div class="loc-meta">
+                        <label>Address</label>
+                        <p>Market House, North Street, Thame, OX9 3HH</p>
+                    </div>
+                    <div class="loc-meta">
+                        <label>Hours</label>
+                        <p>Tue - Sat: 17:00 - 23:00</p>
+                        <p style="font-size: 0.9rem; color: #888;">Closed Sun/Mon</p>
+                    </div>
+                </div>
+
+                <div style="padding-top: 2rem; border-top: 1px solid #eee;">
+                    <h3>Expansion Plans</h3>
+                    <p style="color: #666;">We are currently scouting locations in <strong>Oxford</strong> and <strong>High Wycombe</strong>.</p>
+                </div>
+            </div>
+
+            <div class="map-frame reveal">
+                <img src="https://snazzymaps.com/assets/images/styles/1243-shades-of-grey.png" alt="Map">
+                <a href="#" class="btn" style="position: absolute; bottom: 2rem; left: 2rem;">Get Directions</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="wrapper">
+            <a href="#" class="footer-logo">ATALAY</a>
+            <div class="footer-links">
+                <a href="#about">Story</a>
+                <a href="#menu">Menu</a>
+                <a href="#locations">Locations</a>
+                <a href="#filming">Filming</a>
+            </div>
+            <p>© 2026 Atalay Kebab Van. All rights reserved.</p>
+            <br>
+            <p>07732 453029 • info@atalaykebab.co.uk</p>
+        </div>
+    </footer>
+
+    <script>
+        // 1. Mobile Menu
+        function toggleMenu() {
+            document.getElementById('mobileMenu').classList.toggle('active');
+        }
+
+        // 2. Scroll Reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    
+                    // Specific logic for Hero Image animation triggering
+                    if(entry.target.classList.contains('hero-text')) {
+                        document.querySelector('.hero-image img').style.transform = "scale(1)";
+                    }
+                }
+            });
+        }, { threshold: 0.1 });
+
+        // Apply reveal class to sections for animation
+        document.querySelectorAll('.reveal').forEach(el => {
+            el.classList.add('reveal-text'); // Add the CSS class
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
