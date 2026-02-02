@@ -31,10 +31,12 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
+html, body {
+    width: 100%;
+    overflow-x: hidden; /* Crucial: Applies to both */
+    position: relative; /* Helps contain absolute elements */
+}
         body {
-            width: 100%;
-            max-width: 100vw;
             background-color: var(--black);
             color: var(--white);
             font-family: var(--font-body);
@@ -294,7 +296,7 @@
 
        /* --- 5. INFO TICKER --- */
         .ticker-wrap {
-            width: 100%; /* Changed from 99% to prevent cut-off */
+            width: 98%; /* Changed from 99% to prevent cut-off */
             overflow: hidden; 
             background: var(--yellow);
             padding: 1rem 0;
