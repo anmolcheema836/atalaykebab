@@ -292,9 +292,9 @@
             flex-wrap: wrap;
         }
 
-        /* --- 5. INFO TICKER --- */
+       /* --- 5. INFO TICKER --- */
         .ticker-wrap {
-            width: 99%;
+            width: 100%; /* Changed from 99% to prevent cut-off */
             overflow: hidden; 
             background: var(--yellow);
             padding: 1rem 0;
@@ -305,27 +305,38 @@
             position: relative;
             z-index: 10;
             touch-action: none; 
+            /* Optional: Adds a fade effect to the edges */
+            -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
         }
+        
         .ticker {
             display: flex;
             white-space: nowrap;
-            animation: marquee 30s linear infinite;
+            /* CRITICAL FIX: Forces width to match content length */
+            width: max-content; 
+            animation: marquee 40s linear infinite; /* Slowed down slightly for better readability */
         }
+        
         .ticker-item {
             display: inline-flex;
             align-items: center;
-            padding: 0 2rem;
+            padding: 0 3rem; /* Increased padding for better spacing */
             font-family: var(--font-display);
             font-size: 1.5rem;
             color: var(--black);
             text-transform: uppercase;
         }
+        
         .ticker-item i {
             margin-right: 10px;
             font-size: 1.2rem;
         }
         
-        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        @keyframes marquee { 
+            0% { transform: translateX(0); } 
+            100% { transform: translateX(-50%); } 
+        }
 
         /* --- 6. MENU GRID --- */
         .section {
@@ -751,13 +762,14 @@
             menu.classList.toggle('active');
         }
 
-        // --- FIXED MARQUEE USING JS ---
+      // --- FIXED MARQUEE USING JS ---
         document.addEventListener("DOMContentLoaded", () => {
             const ticker = document.getElementById('js-ticker');
-            const originalContent = ticker.innerHTML;
             
-            // Duplicate content 4 times for infinite loop buffer
-            ticker.innerHTML = originalContent + originalContent + originalContent + originalContent;
+            // We need enough content to fill the screen width twice (for the -50% slide)
+            // Duplicating it 6 times ensures it works even on 4k ultra-wide monitors
+            const originalContent = ticker.innerHTML;
+            ticker.innerHTML = originalContent.repeat(6);
             
             // Initial call to check open status
             checkOpenStatus();
