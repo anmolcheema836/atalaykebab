@@ -33,12 +33,15 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
+            width: 100%;
+            max-width: 100vw;
             background-color: var(--black);
             color: var(--white);
             font-family: var(--font-body);
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             padding-top: var(--nav-height);
+            overflow-x: hidden;
         }
 
         /* --- 1. FX & TEXTURES --- */
@@ -292,13 +295,16 @@
         /* --- 5. INFO TICKER --- */
         .ticker-wrap {
             width: 100%;
-            overflow: hidden;
+            overflow: hidden; 
             background: var(--yellow);
             padding: 1rem 0;
             transform: rotate(-1deg) scale(1.02);
             border-top: 4px solid black;
             border-bottom: 4px solid black;
             display: flex;
+            position: relative;
+            z-index: 10;
+            touch-action: none; 
         }
         .ticker {
             display: flex;
