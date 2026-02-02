@@ -20,7 +20,6 @@
             --white: #ffffff;
             --border: 3px solid var(--white);
             --hard-shadow: 8px 8px 0px var(--white);
-            --hard-shadow-hover: 4px 4px 0px var(--white);
             
             --font-display: 'Teko', sans-serif;
             --font-body: 'Inter', sans-serif;
@@ -69,14 +68,15 @@
             background: var(--red);
             color: var(--white);
             font-family: var(--font-display);
-            font-size: 1.8rem;
-            padding: 0.5rem 2rem;
+            font-size: 1.5rem;
+            padding: 0.8rem 2rem;
             border: 3px solid var(--white);
             box-shadow: var(--hard-shadow);
             text-decoration: none;
             transition: 0.2s;
             transform: translate(-4px, -4px); /* Lifted initial state */
             cursor: pointer;
+            text-transform: uppercase;
         }
         .btn:hover {
             transform: translate(0, 0); /* Press down effect */
@@ -106,15 +106,13 @@
             display: flex; justify-content: space-between; align-items: center;
         }
 
-        .logo { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-size: 2.5rem; color: white; text-decoration: none; }
-        .logo span { color: var(--red); }
-        .logo img { height: 45px; width: auto; border: 2px solid white; border-radius: 50%; background: white; }
+        .logo img { height: 65px; width: auto; display: block; }
 
         .nav-links { display: flex; gap: 2rem; align-items: center; }
-        .nav-links a { font-weight: 700; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; }
+        .nav-links a { font-weight: 700; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; color: white; text-decoration: none;}
         .nav-links a:hover { color: var(--yellow); text-decoration: underline; text-decoration-thickness: 3px; }
 
-        .hamburger { display: none; font-size: 2rem; cursor: pointer; border: 2px solid white; padding: 5px 10px; }
+        .hamburger { display: none; font-size: 2rem; cursor: pointer; border: 2px solid white; padding: 5px 10px; color: white;}
 
         /* --- 5. HERO SECTION --- */
         .hero {
@@ -134,7 +132,10 @@
         }
 
         .hero-visual {
-            background: url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=1974&auto=format&fit=crop') center/cover;
+            /* USING SAME HERO IMAGE */
+            background-image: url('hero.png'); 
+            background-position: center;
+            background-size: cover;
             border-left: 3px solid var(--white);
             position: relative;
             filter: grayscale(100%) contrast(1.2);
@@ -142,7 +143,6 @@
         }
         .hero-visual:hover { filter: grayscale(0%); }
         
-        /* Floating Badge */
         .hero-badge {
             position: absolute; bottom: 2rem; right: 2rem;
             background: var(--yellow); color: var(--black);
@@ -163,13 +163,13 @@
             overflow: hidden;
             white-space: nowrap;
             border-bottom: 3px solid var(--black);
-            transform: rotate(-1deg) scale(1.02); /* Jaunty angle */
+            transform: rotate(-1deg) scale(1.02);
             z-index: 10; position: relative;
         }
         .track { display: inline-block; animation: scroll 15s linear infinite; }
         @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-        /* --- 7. MENU GRID (TICKETS) --- */
+        /* --- 7. MENU GRID --- */
         .section { padding: 6rem 2rem; max-width: 1400px; margin: 0 auto; }
         
         .menu-grid {
@@ -209,30 +209,40 @@
             transform: rotate(3deg);
         }
 
-        /* --- 8. FILMING (CINEMA REEL) --- */
+        /* --- 8. FILMING --- */
         .filming-section {
-            background: var(--red);
+            background: var(--black);
             color: var(--white);
             border-top: 3px solid var(--white);
             border-bottom: 3px solid var(--white);
             padding: 0;
             display: grid;
-            grid-template-columns: 100px 1fr 100px; /* Film holes */
+            grid-template-columns: 100px 1fr 100px; 
+            overflow: hidden;
         }
         
         .film-holes {
-            background-image: radial-gradient(var(--black) 20%, transparent 21%);
+            background-image: radial-gradient(var(--red) 20%, transparent 21%);
             background-size: 100px 60px;
             background-position: center;
+            background-color: var(--black);
         }
 
         .film-inner {
             padding: 6rem 2rem;
             text-align: center;
-            background: var(--red);
             border-left: 3px solid var(--white);
             border-right: 3px solid var(--white);
+            position: relative;
+            background-image: url('filming.png');
+            background-size: cover;
+            background-position: center;
         }
+        
+        .film-overlay {
+            position: absolute; inset: 0; background: rgba(229, 37, 33, 0.9); z-index: 1;
+        }
+        .film-content { position: relative; z-index: 2; }
 
         /* --- 9. LOCATIONS (MAP) --- */
         .loc-wrapper {
@@ -245,12 +255,18 @@
         }
         
         .loc-info { padding: 3rem; }
-        .loc-map { background: #eee; border-left: 3px solid var(--black); position: relative; min-height: 300px; }
-        .loc-map img { filter: grayscale(100%); width: 100%; height: 100%; object-fit: cover; }
         
-        .pin {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -100%);
-            font-size: 3rem; color: var(--red); text-shadow: 2px 2px 0 var(--black);
+        /* Fixed Map Iframe */
+        .loc-map { 
+            background: #222; 
+            border-left: 3px solid var(--black); 
+            position: relative; 
+            min-height: 400px;
+        }
+        .loc-map iframe {
+            width: 100%;
+            height: 100%;
+            filter: grayscale(100%) invert(0.01); /* Matches theme */
         }
 
         /* --- 10. FOOTER --- */
@@ -260,8 +276,12 @@
             border-top: 3px solid var(--white);
             text-align: center;
         }
-        .footer-logo { font-size: 5rem; font-family: var(--font-display); color: var(--white); margin-bottom: 2rem; display: block; }
-        .footer-logo span { color: var(--red); -webkit-text-stroke: 2px white; }
+        .footer-logo-img { 
+            height: 90px; 
+            width: auto; 
+            margin-bottom: 2rem; 
+            display: inline-block;
+        }
 
         /* --- MOBILE --- */
         @media (max-width: 900px) {
@@ -273,7 +293,7 @@
             .hamburger { display: block; }
             .filming-section { grid-template-columns: 20px 1fr 20px; }
             .loc-wrapper { grid-template-columns: 1fr; }
-            .loc-map { height: 250px; border-left: none; border-top: 3px solid black; }
+            .loc-map { height: 350px; border-left: none; border-top: 3px solid black; }
         }
 
         /* Mobile Menu */
@@ -285,7 +305,7 @@
         .mobile-menu.active { height: auto; padding-bottom: 2rem; }
         .mobile-menu a {
             display: block; padding: 1rem 2rem; font-family: var(--font-display); font-size: 2rem;
-            color: white; border-bottom: 1px solid rgba(255,255,255,0.3);
+            color: white; border-bottom: 1px solid rgba(255,255,255,0.3); text-decoration: none;
         }
 
     </style>
@@ -294,16 +314,14 @@
 
     <nav>
         <a href="#" class="logo">
-            <img src="logo.png" alt="logo" onerror="this.style.display='none'">
-            ATALAY<span>KEBAB</span>
+            <img src="logo.png" alt="Atalay Logo" onerror="this.style.display='none'">
         </a>
         <div class="nav-links">
-            <a href="#about">Story</a>
             <a href="#menu">Menu</a>
-            <a href="#filming">Filming</a>
+            <a href="#about">Our Story</a>
             <a href="#locations">Locations</a>
-            <a href="#contact">Pitch</a>
-            <a href="#order" class="btn" style="font-size: 1.2rem; padding: 0.2rem 1.5rem; border-width: 2px; box-shadow: 4px 4px 0 white;">ORDER</a>
+            <a href="#filming">Filming</a>
+            <a href="https://www.atalaykebabvan.co.uk/" class="btn" style="font-size: 1.1rem; padding: 0.5rem 1.5rem; border-width: 2px;">ORDER ONLINE</a>
         </div>
         <div class="hamburger" onclick="toggleMenu()">
             <i class="fa-solid fa-bars"></i>
@@ -311,12 +329,11 @@
     </nav>
 
     <div class="mobile-menu" id="mobileMenu">
-        <a href="#about" onclick="toggleMenu()">Our Story</a>
         <a href="#menu" onclick="toggleMenu()">Menu</a>
+        <a href="#about" onclick="toggleMenu()">Our Story</a>
         <a href="#locations" onclick="toggleMenu()">Locations</a>
         <a href="#filming" onclick="toggleMenu()">Filming</a>
-        <a href="#contact" onclick="toggleMenu()">Pitch Enquiry</a>
-        <a href="#order" onclick="toggleMenu()">Order Online</a>
+        <a href="https://www.atalaykebabvan.co.uk/" onclick="toggleMenu()" style="background: var(--black); color: var(--yellow);">Order Online</a>
     </div>
 
     <header class="hero">
@@ -324,11 +341,11 @@
             <p style="text-transform: uppercase; letter-spacing: 2px; color: var(--yellow); margin-bottom: 1rem;">Est. 1988 • Thame, UK</p>
             <h1 class="display-text">PROPER<br>KEBABS.</h1>
             <p style="font-size: 1.25rem; margin-bottom: 2rem; max-width: 400px; line-height: 1.6;">
-                The award-winning street food legend. British twist, Turkish soul, and a secret chilli sauce that people drive miles for.
+                The award-winning street food icon. Famous for our secret 30-ingredient chilli sauce and hand-stacked doner.
             </p>
             <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                <a href="#order" class="btn">ORDER ONLINE</a>
-                <a href="#menu" class="btn btn-outline">THE MENU</a>
+                <a href="https://www.atalaykebabvan.co.uk/" class="btn">START ORDER</a>
+                <a href="#menu" class="btn btn-outline">VIEW MENU</a>
             </div>
         </div>
         <div class="hero-visual">
@@ -358,12 +375,9 @@
                     <li style="margin-bottom: 0.5rem;"><i class="fa-solid fa-check text-yellow"></i> Secret Family Recipes</li>
                 </ul>
             </div>
-            <div style="background: #222; border: 3px solid white; padding: 2rem; transform: rotate(2deg);">
-                <i class="fa-solid fa-quote-left" style="font-size: 3rem; color: var(--yellow);"></i>
-                <p style="font-size: 2rem; font-family: var(--font-display); line-height: 1; margin: 1rem 0;">
-                    "THE BEST DONER MEAT I HAVE EVER HAD. PERIOD."
-                </p>
-                <div style="text-align: right; font-weight: bold; color: var(--red);">- FOOD REVIEW CLUB</div>
+            <!-- REPLACED Quote Box with Van Image -->
+            <div style="border: 3px solid white; height: 350px; transform: rotate(2deg); overflow: hidden;">
+                <img src="van.png" alt="The Kebab Van" style="width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%);">
             </div>
         </div>
     </section>
@@ -374,7 +388,7 @@
             
             <div class="menu-ticket">
                 <div class="ticket-img">
-                    <img src="https://images.unsplash.com/photo-1629854497576-9d628d0979d3?q=80&w=1000&auto=format&fit=crop" alt="Doner">
+                    <img src="lambdoner.png" alt="Lamb Doner">
                 </div>
                 <div class="ticket-content">
                     <div class="ticket-header">
@@ -387,7 +401,7 @@
 
             <div class="menu-ticket">
                 <div class="ticket-img">
-                    <img src="https://images.unsplash.com/photo-1603360946369-dc9bb6f54262?q=80&w=1000&auto=format&fit=crop" alt="Shish">
+                    <img src="chickenshish.png" alt="Chicken Shish">
                 </div>
                 <div class="ticket-content">
                     <div class="ticket-header">
@@ -400,7 +414,7 @@
 
             <div class="menu-ticket">
                 <div class="ticket-img">
-                    <img src="https://images.unsplash.com/photo-1594007773226-e19bc8112002?q=80&w=1000&auto=format&fit=crop" alt="Burger">
+                    <img src="pounder.png" alt="Burger">
                 </div>
                 <div class="ticket-content">
                     <div class="ticket-header">
@@ -413,18 +427,21 @@
 
         </div>
         <div style="text-align: center; margin-top: 4rem;">
-            <a href="#order" class="btn">START YOUR ORDER</a>
+            <a href="https://www.atalaykebabvan.co.uk/" class="btn">START YOUR ORDER</a>
         </div>
     </section>
 
     <section id="filming" class="filming-section">
         <div class="film-holes"></div>
         <div class="film-inner">
-            <h2 style="font-size: 4rem; text-shadow: 3px 3px 0 black;">AS SEEN ON SCREEN</h2>
-            <p style="font-size: 1.2rem; max-width: 600px; margin: 0 auto 2rem;">
-                Looking for an iconic British street food backdrop? Our van is available for Film, TV, and Commercial shoots.
-            </p>
-            <a href="#contact" class="btn" style="background: var(--white); color: var(--red); border-color: var(--black); box-shadow: 5px 5px 0 var(--black);">FILMING ENQUIRY</a>
+            <div class="film-overlay"></div>
+            <div class="film-content">
+                <h2 style="font-size: 4rem; text-shadow: 3px 3px 0 black;">AS SEEN ON SCREEN</h2>
+                <p style="font-size: 1.2rem; max-width: 600px; margin: 0 auto 2rem;">
+                    Looking for an iconic British street food backdrop? Our van is available for Film, TV, and Commercial shoots.
+                </p>
+                <a href="mailto:info@atalaykebab.co.uk" class="btn" style="background: var(--white); color: var(--red); border-color: var(--black); box-shadow: 5px 5px 0 var(--black);">FILMING ENQUIRY</a>
+            </div>
         </div>
         <div class="film-holes"></div>
     </section>
@@ -435,7 +452,6 @@
         <div class="loc-wrapper">
             <div class="loc-info">
                 <h3 style="font-size: 3rem; margin-bottom: 0.5rem;">THAME (HQ)</h3>
-                <div style="color: #0a0; font-weight: 900; margin-bottom: 2rem;">● OPEN TONIGHT</div>
                 
                 <div style="margin-bottom: 2rem;">
                     <strong>ADDRESS:</strong><br>
@@ -453,45 +469,18 @@
                     Keeping an eye out for spots in <span style="background: var(--yellow);">Oxford</span> & <span style="background: var(--yellow);">High Wycombe</span>.
                 </div>
             </div>
+            <!-- FIXED MAP IFRAME -->
             <div class="loc-map">
-                <img src="https://snazzymaps.com/assets/images/styles/1243-shades-of-grey.png" alt="Map">
-                <div class="pin"><i class="fa-solid fa-location-dot"></i></div>
-                <a href="https://maps.google.com" target="_blank" class="btn" style="position: absolute; bottom: 2rem; right: 2rem; font-size: 1rem;">GET DIRECTIONS</a>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="section" style="background: #1a1a1a; border: 3px solid white; margin-bottom: 4rem;">
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 4rem;">
-            <div>
-                <h2>PITCH / EVENTS</h2>
-                <p style="margin-bottom: 2rem; color: #ccc;">Want Atalay's at your festival? Or have a location idea?</p>
-                <form style="display: grid; gap: 1rem;">
-                    <input type="text" placeholder="NAME / COMPANY" style="padding: 1rem; background: black; border: 2px solid #555; color: white; font-family: var(--font-body);">
-                    <select style="padding: 1rem; background: black; border: 2px solid #555; color: white; font-family: var(--font-body);">
-                        <option>Filming Enquiry</option>
-                        <option>Event Pitch</option>
-                        <option>Business Proposal</option>
-                    </select>
-                    <textarea rows="3" placeholder="DETAILS" style="padding: 1rem; background: black; border: 2px solid #555; color: white; font-family: var(--font-body);"></textarea>
-                    <button class="btn btn-outline" style="width: 100%;">SEND PITCH</button>
-                </form>
-            </div>
-            <div>
-                <h2>CONTACT INFO</h2>
-                <p style="margin-bottom: 2rem; color: #ccc;">For urgent order issues call us.</p>
-                <div style="font-size: 1.5rem; margin-bottom: 1rem;"><i class="fa-solid fa-phone text-yellow"></i> 07732 453029</div>
-                <div style="font-size: 1.5rem; margin-bottom: 1rem;"><i class="fa-solid fa-envelope text-yellow"></i> info@atalaykebab.co.uk</div>
-                <div style="margin-top: 2rem;">
-                    <a href="#" style="font-size: 2rem; margin-right: 1rem; color: white;"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#" style="font-size: 2rem; color: white;"><i class="fa-brands fa-facebook"></i></a>
-                </div>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d146.75179883974036!2d-0.977033190429237!3d51.74666165557872!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4876edea35a58241%3A0x42d228f7502c990d!2sAtalay&#39;s%20Kebab%20Van%20%7C%20Thame!5e1!3m2!1sen!2sin!4v1770029271662!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </div>
     </section>
 
     <footer>
-        <a href="#" class="footer-logo">ATALAY<span>KEBAB</span></a>
+        <!-- FIXED LOGO IMAGE -->
+        <a href="#" class="footer-logo">
+            <img src="logo.png" alt="Atalay Logo" class="footer-logo-img">
+        </a>
         <p style="color: #777;">© 2026 Atalay Kebab Van. Legend of Thame.</p>
         <div style="margin-top: 2rem;">
             <a href="#menu" style="margin: 0 1rem; color: white;">MENU</a>
