@@ -975,10 +975,11 @@
                 <div class="info-item">
                     <div class="info-icon"><i class="fa-regular fa-clock"></i></div>
                     <div class="info-content">
-                        <h4>OPENING HOURS</h4>
-                        <p>Tue-Sat: 5pm - 11pm</p>
-                        <p>Sun: 5pm - 10pm</p>
-                    </div>
+    <h4>OPENING HOURS</h4>
+    <p>Tue-Sat: 5pm - 11pm</p>
+    <p>Sun: 5pm - 10pm</p>
+    <p style="color: #555; font-size: 0.8rem;">Monday: Closed</p>
+</div>
                 </div>
                 <div class="info-item warning">
                     <div class="info-icon"><i class="fa-solid fa-coins"></i></div>
@@ -1006,6 +1007,7 @@
                 <a href="locations.html">Locations</a>
                 <a href="filming.html">Filming Enquiries</a>
                 <a href="contact.html">Contact Us</a>
+                <a href="allergy.html">Allergen Guide</a>
             </div>
             <div class="footer-col">
                 <h5>Contact</h5>
@@ -1032,43 +1034,44 @@
         }
 
         // Open/Closed Status Logic
-        function checkOpenStatus() {
-            const liveText = document.getElementById('live-text');
-            const subText = document.getElementById('live-subtext');
-            const dot = document.querySelector('.pulse-dot');
-            
-            // UK Time
-            const ukTimeStr = new Date().toLocaleString("en-US", {timeZone: "Europe/London"});
-            const ukDate = new Date(ukTimeStr);
-            const day = ukDate.getDay(); 
-            const hour = ukDate.getHours();
-            
-            let isOpen = false;
-            let closingTime = 23; // Default 11pm
+       function checkOpenStatus() {
+    const liveText = document.getElementById('live-text');
+    const subText = document.getElementById('live-subtext');
+    const dot = document.querySelector('.pulse-dot');
+    
+    // UK Time
+    const ukTimeStr = new Date().toLocaleString("en-US", {timeZone: "Europe/London"});
+    const ukDate = new Date(ukTimeStr);
+    const day = ukDate.getDay(); 
+    const hour = ukDate.getHours();
+    
+    let isOpen = false;
+    let closingTime = 23; 
 
-            // Sunday (0) = 5pm-10pm
-            if (day === 0) {
-                if (hour >= 17 && hour < 22) isOpen = true;
-                closingTime = 22;
-            }
-            // Tue(2) - Sat(6) = 5pm-11pm
-            else if (day >= 2 && day <= 6) {
-                if (hour >= 17 && hour < 23) isOpen = true;
-            }
-            // Mon(1) = Closed
+    // Sunday (0): 5pm - 10pm
+    if (day === 0) {
+        if (hour >= 17 && hour < 22) isOpen = true;
+        closingTime = 22;
+    }
+    // Tuesday (2) to Saturday (6): 5pm - 11pm
+    else if (day >= 2 && day <= 6) {
+        if (hour >= 17 && hour < 23) isOpen = true;
+        closingTime = 23;
+    }
+    // Note: Monday (1) is closed, so isOpen remains false.
 
-            if (isOpen) {
-                dot.classList.add('open');
-                liveText.innerText = "WE ARE OPEN";
-                liveText.style.color = "var(--green)";
-                subText.innerText = `Come get fed. Open until ${closingTime}:00.`;
-            } else {
-                dot.classList.remove('open');
-                liveText.innerText = "CLOSED NOW";
-                liveText.style.color = "var(--red)";
-                subText.innerText = "Sorry, we are currently closed.";
-            }
-        }
+    if (isOpen) {
+        dot.classList.add('open');
+        liveText.innerText = "WE ARE OPEN";
+        liveText.style.color = "var(--green)";
+        subText.innerText = `Come get fed. Open until ${closingTime}:00.`;
+    } else {
+        dot.classList.remove('open');
+        liveText.innerText = "CLOSED NOW";
+        liveText.style.color = "var(--red)";
+        subText.innerText = day === 1 ? "Closed Mondays. See you tomorrow!" : "Sorry, we are currently closed.";
+    }
+}
         
         // Active link highlighter on scroll
         const sections = document.querySelectorAll("section");
