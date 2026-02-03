@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu | Atalay Kebab Van</title>
+    
+    <!-- Performance Hints -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@300;500;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- 0. VARIABLES & CORE --- */
+        :root {
+            --red: #E52521;
+            --red-glow: rgba(229, 37, 33, 0.4);
+            --yellow: #F7C500;
+            --black: #0a0a0a;
+            --dark: #121212;
+            --card-bg: #1a1a1a;
+            --white: #ffffff;
+            --green: #2ecc71;
+            
+            --font-display: 'Anton', sans-serif;
+            --font-body: 'Manrope', sans-serif;
+            
+            --gutter: clamp(1.5rem, 5vw, 5rem);
+            --nav-height: 80px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background-color: var(--black);
+            color: var(--white);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            padding-top: var(--nav-height);
+        }
+
+        /* --- 1. FX & TEXTURES --- */
+        .ambient-glow {
+            position: fixed;
+            top: 20%; left: 50%;
+            width: 80vw; height: 80vw;
+            background: radial-gradient(circle, var(--red-glow) 0%, rgba(0,0,0,0) 70%);
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            opacity: 0.2;
+            pointer-events: none;
+        }
+
+        .grain {
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-display);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            line-height: 1;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--white);
+            color: var(--black);
+            font-weight: 700;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid var(--white);
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 95% 100%, 0 100%);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            background: var(--red);
+            border-color: var(--red);
+            color: var(--white);
+        }
+        
+        .btn-sm {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 0.5rem 1.2rem;
+            background: transparent;
+            color: var(--red);
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: 1px solid var(--red);
+            border-radius: 4px;
+            transition: 0.2s;
+            font-family: var(--font-body);
+        }
+        .btn-sm:hover {
+            background: var(--red);
+            color: var(--white);
+            box-shadow: 0 0 15px rgba(229, 37, 33, 0.4);
+        }
+
+        /* --- 2. NAVIGATION --- */
+        nav {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            height: var(--nav-height);
+            padding: 0 var(--gutter);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .logo { display: flex; align-items: center; text-decoration: none; }
+        .logo img { height: 60px; width: auto; }
+        .logo-text { font-family: var(--font-display); font-size: 1.8rem; color: var(--white); }
+        .logo-text span { color: var(--red); }
+
+        .nav-items { display: flex; gap: 3rem; align-items: center; }
+        .nav-items a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .nav-items a:hover, .nav-items a.active { color: var(--white); }
+        .nav-items a.btn { color: var(--black) !important; padding: 0.7rem 1.5rem; font-size: 0.85rem; background: white; opacity: 1; }
+        .nav-items a.btn:hover { color: white !important; background: var(--red); }
+
+        .hamburger { display: none; font-size: 1.5rem; color: white; cursor: pointer; }
+        
+        .mobile-menu {
+            position: fixed; top: var(--nav-height); left: 0; width: 100%;
+            background: var(--black); padding: 2rem; display: flex; flex-direction: column;
+            gap: 2rem; border-bottom: 1px solid var(--red);
+            transform: translateY(-150%); transition: transform 0.4s ease; z-index: 999;
+        }
+        .mobile-menu.active { transform: translateY(0); }
+        .mobile-menu a { font-family: var(--font-display); font-size: 1.5rem; color: white; text-decoration: none; text-transform: uppercase; border-bottom: 1px solid #222; padding-bottom: 10px; }
+
+        /* --- 3. MENU STYLES --- */
+        .menu-header {
+            padding: 4rem var(--gutter) 2rem;
+            text-align: center;
+            background: linear-gradient(to bottom, #111 0%, transparent 100%);
+            border-bottom: 1px solid #222;
+        }
+        .menu-header h1 { font-size: clamp(3rem, 6vw, 5rem); margin-bottom: 0.5rem; }
+        .menu-header h1 span { color: var(--red); }
+        .menu-subtitle { color: #888; font-size: 1.1rem; }
+        
+        .menu-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 4rem;
+            padding: 4rem var(--gutter);
+            max-width: 1400px;
+            margin: 0 auto;
+            align-items: start;
+        }
+
+        .menu-sidebar {
+            position: sticky; top: 100px; background: #111; padding: 1.5rem;
+            border-radius: 12px; border: 1px solid #222;
+        }
+        .menu-sidebar h3 { font-size: 1.2rem; margin-bottom: 1.5rem; color: #555; }
+        .cat-links { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+        .cat-links a {
+            color: #aaa; text-decoration: none; font-weight: 500; padding: 0.8rem 1rem;
+            border-radius: 6px; transition: all 0.3s; display: block;
+        }
+        .cat-links a:hover, .cat-links a.active { background: var(--red); color: white; transform: translateX(5px); }
+
+        .category-section { margin-bottom: 5rem; scroll-margin-top: 120px; }
+        .category-header {
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid #333; padding-bottom: 1rem; margin-bottom: 2rem;
+        }
+        .category-title { font-size: 2.5rem; margin-bottom: 0; }
+        
+        .item-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+        .item-card {
+            background: var(--card-bg); border: 1px solid rgba(255,255,255,0.05);
+            padding: 1.5rem; border-radius: 8px; transition: 0.3s; display: flex; flex-direction: column;
+        }
+        .item-card:hover { border-color: var(--yellow); transform: translateY(-3px); }
+        
+        .item-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.8rem; }
+        .item-title { font-family: var(--font-display); font-size: 1.4rem; color: white; letter-spacing: 0.5px; }
+        .item-price { color: var(--yellow); font-family: var(--font-display); font-size: 1.3rem; white-space: nowrap; }
+        .item-desc { font-size: 0.9rem; color: #999; line-height: 1.5; flex-grow: 1; margin-bottom: 1rem; }
+        
+        .badges { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: auto; }
+        .badge { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; border: 1px solid #444; color: #ccc; }
+        .note { font-size: 0.8rem; color: var(--red); font-weight: 700; margin-top: 0.5rem; display: block; }
+
+        /* --- 4. REDESIGNED DASHBOARD ALERT --- */
+        .dashboard-section {
+            padding: 4rem var(--gutter);
+            background: #0d0d0d;
+            border-top: 1px solid #222;
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #121212;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid #222;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        /* Left Side: Status */
+        .status-panel {
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: radial-gradient(circle at top left, #1a1a1a, #0a0a0a);
+            border-right: 1px solid #222;
+            position: relative;
+        }
+        
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .pulse-dot {
+            width: 16px; height: 16px;
+            border-radius: 50%;
+            background: var(--red);
+            box-shadow: 0 0 0 rgba(229, 37, 33, 0.4);
+            animation: pulse 2s infinite;
+        }
+        .pulse-dot.open { background: var(--green); box-shadow: 0 0 0 rgba(46, 204, 113, 0.4); animation: pulseGreen 2s infinite; }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(229, 37, 33, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(229, 37, 33, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(229, 37, 33, 0); }
+        }
+        @keyframes pulseGreen {
+            0% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(46, 204, 113, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); }
+        }
+
+        #live-text {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            line-height: 1;
+            color: var(--white);
+            letter-spacing: 1px;
+        }
+        
+        .live-subtext { color: #666; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-top: 1rem; }
+
+        /* Right Side: Info */
+        .info-panel {
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .info-item { display: flex; gap: 1.5rem; align-items: flex-start; }
+        .info-icon {
+            width: 50px; height: 50px;
+            background: #1a1a1a;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: #888;
+            font-size: 1.2rem;
+            border: 1px solid #333;
+        }
+        .info-item.warning .info-icon { color: var(--yellow); border-color: rgba(247, 197, 0, 0.3); background: rgba(247, 197, 0, 0.1); }
+        
+        .info-content h4 { color: #888; font-size: 0.8rem; margin-bottom: 0.3rem; }
+        .info-content p { font-size: 1.1rem; color: white; font-weight: 500; }
+        .info-content p.warning-text { color: var(--yellow); }
+
+        /* --- 5. FOOTER --- */
+        footer { padding: 5rem var(--gutter); border-top: 1px solid #222; background: #050505; }
+        .footer-logo img { height: 70px; width: auto; display: block; margin-bottom: 2rem; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem; }
+        .footer-col h5 { color: #555; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 1px; font-family: var(--font-display); }
+        .footer-col a { display: block; color: #ddd; margin-bottom: 0.8rem; text-decoration: none; transition: 0.3s; }
+        .footer-col a:hover { color: var(--red); padding-left: 5px; }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 900px) {
+            .nav-items { display: none; }
+            .hamburger { display: block; }
+            .menu-layout { grid-template-columns: 1fr; padding-top: 2rem; gap: 2rem; }
+            .menu-sidebar { position: sticky; top: 80px; z-index: 90; width: 100%; margin-bottom: 2rem; overflow-x: auto; white-space: nowrap; padding: 1rem; background: rgba(18,18,18,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--red); }
+            .menu-sidebar h3 { display: none; }
+            .cat-links { flex-direction: row; }
+            .cat-links a { background: #222; border: 1px solid #333; }
+            .category-header { flex-direction: row; align-items: flex-start; gap: 3rem; }
+            .btn-sm { width: 100%; justify-content: center; }
+            
+            /* Dashboard Mobile */
+            .dashboard-grid { grid-template-columns: 1fr; }
+            .status-panel { padding: 2rem; border-right: none; border-bottom: 1px solid #222; text-align: center; }
+            .live-indicator { justify-content: center; }
+            .info-panel { padding: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-glow"></div>
+    <div class="grain"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html" class="logo">
+            <img src="assets/logo.webp" alt="Atalay Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+            <span class="logo-text" style="display:none;">ATALAY<span>KEBAB</span></span>
+        </a>
+        
+        <div class="nav-items">
+            <a href="menu.html" class="active">Menu</a>
+            <a href="ourstory.html">Our Story</a>
+            <a href="locations.html">Locations</a>
+            <a href="filming.html">Filming</a>
+            <a href="contact.html">Contact Us</a>
+            <a href="https://www.atalaykebabvan.co.uk/" class="btn">Order Now</a>
+        </div>
+
+        <div class="hamburger" onclick="toggleMenu()">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="menu.html" onclick="toggleMenu()">Menu</a>
+        <a href="ourstory.html" onclick="toggleMenu()">Our Story</a>
+        <a href="locations.html" onclick="toggleMenu()">Locations</a>
+        <a href="filming.html" onclick="toggleMenu()">Filming Enquiries</a>
+        <a href="contact.html" onclick="toggleMenu()">Contact Us</a>
+        <a href="https://www.atalaykebabvan.co.uk/" onclick="toggleMenu()" style="color: var(--red);">Order Online</a>
+    </div>
+
+    <!-- Menu Header -->
+    <header class="menu-header">
+        <h1>OUR <span>MENU</span></h1>
+        <p class="menu-subtitle">Legendary street food. Grilled to order.</p>
+    </header>
+
+    <div class="menu-layout">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="menu-sidebar">
+            <h3>CATEGORIES</h3>
+            <div class="cat-links">
+                <a href="#kebabs">Kebabs</a>
+                <a href="#combo">Combo Kebabs</a>
+                <a href="#burgers">Burgers</a>
+                <a href="#wraps">Wraps</a>
+                <a href="#chicken">Chicken</a>
+                <a href="#extras">Extras</a>
+                <a href="#drinks">Drinks</a>
+            </div>
+        </aside>
+
+        <!-- Menu Content -->
+        <main>
+            <!-- KEBABS -->
+            <section id="kebabs" class="category-section">
+                <div class="category-header">
+                    <h2 class="category-title">KEBABS</h2>
+                    <a href="https://www.atalaykebabvan.co.uk/" class="btn-sm">Order Now <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="item-grid">
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Doner</span>
+                            <span class="item-price">£9.60</span>
+                        </div>
+                        <p class="item-desc">Lamb doner meat cooked on the upright spit, served in a pitta bread with salad & sauce of your choice.</p>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Chicken Kebab</span>
+                            <span class="item-price">£9.40</span>
+                        </div>
+                        <p class="item-desc">Marinated fillets of chicken cooked on a grill. Served in a pitta bread with salad & sauce of your choice.</p>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Lamb Shish</span>
+                            <span class="item-price">£10.90</span>
+                        </div>
+                        <p class="item-desc">Marinated fillets of lamb cooked on a grill. Served in a pitta bread with salad & sauce of your choice.</p>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Mixed Kebab</span>
+                            <span class="item-price">£11.90</span>
+                        </div>
+                        <p class="item-desc">Consisting of lamb shish, chicken shish & lamb doner, served together in a pitta bread, salad & sauce of your choice.</p>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Chicken & Chips</span>
+                            <span class="item-price">£9.40</span>
+                        </div>
+                        <p class="item-desc">Chicken shish served with chips, salad & sauce of your choice.</p>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Doner & Chips</span>
+                            <span class="item-price">£9.60</span>
+                        </div>
+                        <p class="item-desc">Lamb doner meat served with chips, salad & sauce of your choice.</p>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Shish & Chips</span>
+                            <span class="item-price">£10.90</span>
+                        </div>
+                        <p class="item-desc">Lamb shish served with chips, salad & sauce of your choice.</p>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Mixed Meat & Chips</span>
+                            <span class="item-price">£11.90</span>
+                        </div>
+                        <p class="item-desc">Consisting of lamb shish, chicken shish & lamb doner with chips, served together, salad & sauce of your choice.</p>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                     <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Box of Doner Meat</span>
+                            <span class="item-price">£9.30</span>
+                        </div>
+                        <p class="item-desc">Lamb doner meat in a box, served with salad & sauce of your choice.</p>
+                        <span class="note">No Bread Included</span>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Box of Chicken</span>
+                            <span class="item-price">£9.20</span>
+                        </div>
+                        <p class="item-desc">Marinated pieces of chicken breast in a box, served with salad & sauce of your choice.</p>
+                        <span class="note">No Bread Included</span>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Box of Shish</span>
+                            <span class="item-price">£10.50</span>
+                        </div>
+                        <p class="item-desc">Lamb shish in a box, served with salad & sauce of your choice.</p>
+                        <span class="note">No Bread Included</span>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Box of Mixed Meat</span>
+                            <span class="item-price">£11.50</span>
+                        </div>
+                        <p class="item-desc">Consisting of lamb shish, chicken shish & lamb doner, served together in a box, salad & sauce of your choice.</p>
+                        <span class="note">No Bread Included</span>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Falafel Kebab</span>
+                            <span class="item-price">£5.50</span>
+                        </div>
+                        <p class="item-desc">Falafel served in a pitta bread with salad & sauce of your choice.</p>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Popcorn Kebab</span>
+                            <span class="item-price">£6.10</span>
+                        </div>
+                        <p class="item-desc">Chicken popcorn served in a pitta bread with salad & sauce of your choice.</p>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Chips Kebab</span>
+                            <span class="item-price">£5.50</span>
+                        </div>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Salad Kebab</span>
+                            <span class="item-price">£4.80</span>
+                        </div>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- COMBO KEBABS -->
+            <section id="combo" class="category-section">
+                <div class="category-header">
+                    <h2 class="category-title">COMBOS</h2>
+                    <a href="https://www.atalaykebabvan.co.uk/" class="btn-sm">Order Now <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+                <div class="item-grid">
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Chicken & Shish Kebab</span>
+                            <span class="item-price">£10.70</span>
+                        </div>
+                        <p class="item-desc">Combination of lamb shish, chicken shish, served together in a pitta bread, salad & sauce of your choice.</p>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Doner & Shish Kebab</span>
+                            <span class="item-price">£11.90</span>
+                        </div>
+                        <p class="item-desc">Combination of lamb shish, lamb doner, served together in a pitta bread, salad & sauce of your choice.</p>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Chicken & Doner Kebab</span>
+                            <span class="item-price">£11.60</span>
+                        </div>
+                        <p class="item-desc">Combination of chicken shish, lamb doner, served together in a pitta bread, salad & sauce of your choice.</p>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Chicken & Shish with Chips</span>
+                            <span class="item-price">£10.70</span>
+                        </div>
+                        <p class="item-desc">Combination of lamb shish, chicken shish with chips, served together with salad & sauce of your choice.</p>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Doner & Shish with Chips</span>
+                            <span class="item-price">£11.90</span>
+                        </div>
+                        <p class="item-desc">Combination of lamb shish, lamb doner with chips, served together, salad & sauce of your choice.</p>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Chicken & Doner with Chips</span>
+                            <span class="item-price">£11.60</span>
+                        </div>
+                        <p class="item-desc">Combination of Chicken shish, lamb doner with chips, served together, salad & sauce of your choice.</p>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Chicken & Shish Wrap</span>
+                            <span class="item-price">£10.70</span>
+                        </div>
+                        <p class="item-desc">Combination of chicken and lamb shish, served in a wrap bread with sauce and salad of your choice.</p>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Doner & Shish Wrap</span>
+                            <span class="item-price">£11.90</span>
+                        </div>
+                        <p class="item-desc">Combination of lamb doner, lamb shish, served in a wrap bread with sauce and salad of your choice.</p>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Chicken & Doner Wrap</span>
+                            <span class="item-price">£11.60</span>
+                        </div>
+                        <p class="item-desc">Combination of chicken shish, lamb doner, served in a wrap bread with sauce and salad of your choice.</p>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Chicken & Lamb Shish Box</span>
+                            <span class="item-price">£10.40</span>
+                        </div>
+                        <p class="item-desc">Combination of chicken shish, lamb shish, served in a box with sauce and salad of your choice.</p>
+                        <span class="note">No Bread Included</span>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Doner & Lamb Shish Box</span>
+                            <span class="item-price">£11.60</span>
+                        </div>
+                        <p class="item-desc">Combination of lamb doner, lamb shish, served in a box with sauce and salad of your choice.</p>
+                        <span class="note">No Bread Included</span>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Chicken & Doner Box</span>
+                            <span class="item-price">£11.30</span>
+                        </div>
+                        <p class="item-desc">Combination of chicken shish, lamb doner, served in a box with sauce and salad of your choice.</p>
+                        <span class="note">No Bread Included</span>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                </div>
+            </section>
+
+             <!-- BURGERS -->
+            <section id="burgers" class="category-section">
+                <div class="category-header">
+                    <h2 class="category-title">BURGERS</h2>
+                    <a href="https://www.atalaykebabvan.co.uk/" class="btn-sm">Order Now <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+                <div class="item-grid">
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Beef Burger</span>
+                            <span class="item-price">£5.40</span>
+                        </div>
+                        <p class="item-desc">1/4lb beef burger served in a bun with salad & sauce of your choice.</p>
+                        <div class="badges"><span class="badge">1/4lb</span><span class="badge">1/2lb</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Cheese Burger</span>
+                            <span class="item-price">£5.60</span>
+                        </div>
+                        <p class="item-desc">1/4lb cheese burger served in a bun with salad & sauce of your choice.</p>
+                        <div class="badges"><span class="badge">1/4lb</span><span class="badge">1/2lb</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Beef Burger with Doner</span>
+                            <span class="item-price">£6.60</span>
+                        </div>
+                        <p class="item-desc">1/4lb beef burger with doner, served in a bun with salad & sauce of your choice.</p>
+                        <div class="badges"><span class="badge">1/4lb</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Beef Burger & Doner</span>
+                            <span class="item-price">£7.60</span>
+                        </div>
+                        <p class="item-desc">1/2lb beef burger with doner, served in a bun with salad & a sauce of your choice.</p>
+                        <div class="badges"><span class="badge">1/2lb</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Chicken Burger</span>
+                            <span class="item-price">£5.90</span>
+                        </div>
+                        <p class="item-desc">Chicken burger served in a bun with salad & sauce of your choice.</p>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Doner Bap</span>
+                            <span class="item-price">£7.10</span>
+                        </div>
+                        <p class="item-desc">Lamb doner in a bun with salad & sauce of your choice.</p>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Chicken Bap</span>
+                            <span class="item-price">£7.10</span>
+                        </div>
+                        <p class="item-desc">Chicken shish in a bun with salad & sauce of your choice.</p>
+                    </div>
+                </div>
+            </section>
+            
+             <!-- WRAPS -->
+            <section id="wraps" class="category-section">
+                <div class="category-header">
+                    <h2 class="category-title">WRAPS</h2>
+                    <a href="https://www.atalaykebabvan.co.uk/" class="btn-sm">Order Now <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+                <div class="item-grid">
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Doner Wrap</span>
+                            <span class="item-price">£9.70</span>
+                        </div>
+                        <p class="item-desc">Lamb doner served in a wrap bread with sauce & salad of your choice.</p>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span><span class="badge">XL</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Chicken Wrap</span>
+                            <span class="item-price">£9.40</span>
+                        </div>
+                        <p class="item-desc">Chicken shish served in a wrap bread with sauce & salad of your choice.</p>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Shish Wrap</span>
+                            <span class="item-price">£10.90</span>
+                        </div>
+                        <p class="item-desc">Lamb shish served in a wrap bread with sauce & salad of your choice.</p>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Mixed Wrap</span>
+                            <span class="item-price">£11.90</span>
+                        </div>
+                        <p class="item-desc">Consisting of lamb shish, chicken shish & lamb doner, served together in a wrap bread with sauce & salad of your choice.</p>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Popcorn Wrap</span>
+                            <span class="item-price">£6.10</span>
+                        </div>
+                        <p class="item-desc">Popcorn chicken served in a wrap bread with sauce & salad of your choice.</p>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Falafel Wrap</span>
+                            <span class="item-price">£5.50</span>
+                        </div>
+                        <p class="item-desc">Falafel served in a wrap bread with sauce & salad of your choice.</p>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Chips Wrap</span>
+                            <span class="item-price">£5.50</span>
+                        </div>
+                        <p class="item-desc">Chips served in a wrap bread with sauce & salad of your choice.</p>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Salad Wrap</span>
+                            <span class="item-price">£4.80</span>
+                        </div>
+                        <p class="item-desc">Salad served in a wrap bread with sauce of your choice.</p>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                </div>
+            </section>
+            
+             <!-- CHICKEN -->
+            <section id="chicken" class="category-section">
+                <div class="category-header">
+                    <h2 class="category-title">CHICKEN</h2>
+                    <a href="https://www.atalaykebabvan.co.uk/" class="btn-sm">Order Now <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+                <div class="item-grid">
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Nuggets and Chips</span>
+                            <span class="item-price">£6.50</span>
+                        </div>
+                        <p class="item-desc">Chicken nuggets 4 pcs and portion of chips with sauce, served in the same box.</p>
+                        <div class="badges"><span class="badge">4PCS</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Chicken Nuggets</span>
+                            <span class="item-price">£5.50</span>
+                        </div>
+                        <div class="badges"><span class="badge">6PCS</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Popcorn Chicken</span>
+                            <span class="item-price">£6.50</span>
+                        </div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Chicken Burger</span>
+                            <span class="item-price">£5.90</span>
+                        </div>
+                        <p class="item-desc">Chicken fillet burger served in a bun with salad & a sauce of your choice.</p>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Chicken Nuggets & Chips</span>
+                            <span class="item-price">£8.20</span>
+                        </div>
+                        <p class="item-desc">6PCS of Chicken Nuggets & Chips served together in the same box.</p>
+                        <div class="badges"><span class="badge">6PCS</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Popcorn Chicken & Chips</span>
+                            <span class="item-price">£9.10</span>
+                        </div>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Popcorn Chicken Box</span>
+                            <span class="item-price">£7.50</span>
+                        </div>
+                        <div class="badges"><span class="badge">LRG</span></div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- EXTRAS -->
+            <section id="extras" class="category-section">
+                <div class="category-header">
+                    <h2 class="category-title">EXTRAS</h2>
+                    <a href="https://www.atalaykebabvan.co.uk/" class="btn-sm">Order Now <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+                <div class="item-grid" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));">
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Chips</span>
+                            <span class="item-price">£2.70</span>
+                        </div>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Chips & Cheese</span>
+                            <span class="item-price">£3.60</span>
+                        </div>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Salad Box</span>
+                            <span class="item-price">£3.80</span>
+                        </div>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Onion Rings</span>
+                            <span class="item-price">£3.90</span>
+                        </div>
+                        <div class="badges"><span class="badge">10PCS</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Falafel Box</span>
+                            <span class="item-price">£5.60</span>
+                        </div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Mozzarella Sticks</span>
+                            <span class="item-price">£5.40</span>
+                        </div>
+                        <div class="badges"><span class="badge">6PCS</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Popcorn Chicken & Chips</span>
+                            <span class="item-price">£9.10</span>
+                        </div>
+                        <p class="item-desc">Delicious popcorn chicken & chips, served in the same box.</p>
+                        <div class="badges"><span class="badge">SML</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Pot of Sauce</span>
+                            <span class="item-price">£0.90</span>
+                        </div>
+                        <p class="item-desc" style="font-size: 0.8rem;">Chilli, Garlic Mayo, BBQ, Ketchup, Mayonnaise, Burger Sauce, Yogurt Mint, Sweet Chilli</p>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Box of Chillies</span>
+                            <span class="item-price">£1.00</span>
+                        </div>
+                        <p class="item-desc" style="font-size: 0.8rem;">Whole, Chopped, or Mixed</p>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Pitta Bread</span>
+                            <span class="item-price">£0.90</span>
+                        </div>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                     <div class="item-card">
+                        <div class="item-header">
+                            <span class="item-title">Wrap Bread</span>
+                            <span class="item-price">£0.90</span>
+                        </div>
+                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                    </div>
+                </div>
+            </section>
+            
+             <!-- DRINKS -->
+            <section id="drinks" class="category-section">
+                <div class="category-header">
+                    <h2 class="category-title">DRINKS</h2>
+                    <a href="https://www.atalaykebabvan.co.uk/" class="btn-sm">Order Now <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+                <div class="item-grid" style="grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));">
+                    <div class="item-card" style="text-align: center;">
+                        <span class="item-title" style="display: block; margin-bottom: 0.5rem;">Cans (330ml)</span>
+                        <span class="item-price">£1.50</span>
+                        <p class="item-desc" style="margin-top: 0.5rem;">Coke, Diet Coke, Sprite, Dr Pepper, Rio Tropical, Rubicon Mango, Fanta, Irn Bru, Rubicon Passionfruit</p>
+                    </div>
+                    <div class="item-card" style="text-align: center;">
+                        <span class="item-title" style="display: block; margin-bottom: 0.5rem;">Water (500ml)</span>
+                        <span class="item-price">£1.50</span>
+                        <p class="item-desc" style="margin-top: 0.5rem;">Still or Sparkling</p>
+                    </div>
+                    <div class="item-card" style="text-align: center;">
+                        <span class="item-title" style="display: block; margin-bottom: 0.5rem;">Fruit Shoot</span>
+                        <span class="item-price">£1.50</span>
+                        <p class="item-desc" style="margin-top: 0.5rem;">Apple & Blackcurrant</p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- NEW DASHBOARD STYLE ALERT SECTION -->
+    <section class="dashboard-section">
+        <div class="dashboard-grid">
+            <!-- Status Column -->
+            <div class="status-panel">
+                <div class="live-indicator">
+                    <span class="pulse-dot"></span>
+                    <span id="live-text">CHECKING...</span>
+                </div>
+                <p id="live-subtext">Current Shop Status</p>
+                <p style="font-size: 0.8rem; color: #555; margin-top: 0.5rem;">Online orders disabled during peak times.</p>
+            </div>
+            
+            <!-- Info Column -->
+            <div class="info-panel">
+                <div class="info-item">
+                    <div class="info-icon"><i class="fa-regular fa-clock"></i></div>
+                    <div class="info-content">
+                        <h4>OPENING HOURS</h4>
+                        <p>Tue-Sat: 5pm - 11pm</p>
+                        <p>Sun: 5pm - 10pm</p>
+                    </div>
+                </div>
+                <div class="info-item warning">
+                    <div class="info-icon"><i class="fa-solid fa-coins"></i></div>
+                    <div class="info-content">
+                        <h4>PAYMENT METHOD</h4>
+                        <p class="warning-text">CASH ONLY AT THE VAN</p>
+                        <p style="font-size: 0.8rem; color: #666; font-weight: 400;">Cards accepted online only</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <a href="index.html" class="footer-logo">
+            <img src="assets/logo.webp" alt="Atalay Kebab Logo">
+        </a>
+        
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h5>Explore</h5>
+                <a href="menu.html">Full Menu</a>
+                <a href="ourstory.html">Our Story</a>
+                <a href="locations.html">Locations</a>
+                <a href="filming.html">Filming Enquiries</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <div class="footer-col">
+                <h5>Contact</h5>
+                <a href="tel:07732453029">07732 453029</a>
+                <a href="mailto:info@atalaykebab.co.uk">info@atalaykebab.co.uk</a>
+            </div>
+            <div class="footer-col">
+                <h5>Follow</h5>
+                <a href="https://www.instagram.com/atalays_kebab_van/"><i class="fa-brands fa-instagram"></i> Instagram</a>
+                <a href="https://www.facebook.com/Atalayskebabsthame"><i class="fa-brands fa-facebook"></i> Facebook</a>
+            </div>
+        </div>
+        <div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #222; color: #444; font-size: 0.8rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+            <span>© 2026 ATALAY KEBAB VAN</span>
+            <span></span>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('active');
+        }
+
+        // Open/Closed Status Logic
+        function checkOpenStatus() {
+            const liveText = document.getElementById('live-text');
+            const subText = document.getElementById('live-subtext');
+            const dot = document.querySelector('.pulse-dot');
+            
+            // UK Time
+            const ukTimeStr = new Date().toLocaleString("en-US", {timeZone: "Europe/London"});
+            const ukDate = new Date(ukTimeStr);
+            const day = ukDate.getDay(); 
+            const hour = ukDate.getHours();
+            
+            let isOpen = false;
+            let closingTime = 23; // Default 11pm
+
+            // Sunday (0) = 5pm-10pm
+            if (day === 0) {
+                if (hour >= 17 && hour < 22) isOpen = true;
+                closingTime = 22;
+            }
+            // Tue(2) - Sat(6) = 5pm-11pm
+            else if (day >= 2 && day <= 6) {
+                if (hour >= 17 && hour < 23) isOpen = true;
+            }
+            // Mon(1) = Closed
+
+            if (isOpen) {
+                dot.classList.add('open');
+                liveText.innerText = "WE ARE OPEN";
+                liveText.style.color = "var(--green)";
+                subText.innerText = `Come get fed. Open until ${closingTime}:00.`;
+            } else {
+                dot.classList.remove('open');
+                liveText.innerText = "CLOSED NOW";
+                liveText.style.color = "var(--red)";
+                subText.innerText = "Sorry, we are currently closed.";
+            }
+        }
+        
+        // Active link highlighter on scroll
+        const sections = document.querySelectorAll("section");
+        const navLi = document.querySelectorAll(".cat-links a");
+
+        window.onscroll = () => {
+            var current = "";
+            sections.forEach((section) => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 150) {
+                    current = section.getAttribute("id");
+                }
+            });
+
+            navLi.forEach((a) => {
+                a.classList.remove("active");
+                if (a.getAttribute("href").includes(current)) {
+                    a.classList.add("active");
+                }
+            });
+        };
+
+        checkOpenStatus();
+        setInterval(checkOpenStatus, 60000);
+    </script>
+</body>
+</html>

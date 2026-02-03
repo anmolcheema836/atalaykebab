@@ -240,7 +240,7 @@
         .hero-img {
             position: absolute;
             inset: 0;
-            background-image: url('hero.png');
+            background-image: url('assets/hero.webp');
             background-size: cover;
             background-position: center;
             z-index: -2;
@@ -533,15 +533,16 @@
 
     <nav>
         <a href="#" class="logo">
-            <img src="logo.png" alt="Atalay Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+            <img src="assets/logo.webp" alt="Atalay Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
             <span class="logo-text" style="display:none;">ATALAY<span>KEBAB</span></span>
         </a>
         
         <div class="nav-items">
-            <a href="#menu">Menu</a>
-            <a href="#story">Our Story</a>
-            <a href="#locations">Locations</a>
-            <a href="#filming">Filming</a>
+            <a href="menu.html">Menu</a>
+            <a href="ourstory.html">Our Story</a>
+            <a href="locations.html">Locations</a>
+            <a href="filming.html">Filming</a>
+            <a href="contact.html">Contact Us</a>
             <a href="https://www.atalaykebabvan.co.uk/" class="btn">Order Now</a>
         </div>
 
@@ -551,10 +552,11 @@
     </nav>
 
     <div class="mobile-menu" id="mobileMenu">
-        <a href="#menu" onclick="toggleMenu()">Menu</a>
-        <a href="#story" onclick="toggleMenu()">Our Story</a>
-        <a href="#locations" onclick="toggleMenu()">Locations</a>
-        <a href="#filming" onclick="toggleMenu()">Filming Enquiries</a>
+        <a href="menu.html" onclick="toggleMenu()">Menu</a>
+        <a href="ourstory.html" onclick="toggleMenu()">Our Story</a>
+        <a href="locations.html" onclick="toggleMenu()">Locations</a>
+        <a href="filming.html" onclick="toggleMenu()">Filming Enquiries</a>
+        <a href="contact.html" onclick="toggleMenu()">Contact Us</a>
         <a href="https://www.atalaykebabvan.co.uk/" onclick="toggleMenu()" style="color: var(--red);">Order Online</a>
     </div>
 
@@ -599,13 +601,13 @@
                 <span style="color: var(--red); text-transform: uppercase; font-weight: 700; letter-spacing: 2px;">Feast</span>
                 <h2>THE MENU</h2>
             </div>
-            <a href="#" class="btn btn-outline">Full Menu <i class="fa-solid fa-arrow-right"></i></a>
+            <a href="menu.html" class="btn btn-outline">Full Menu <i class="fa-solid fa-arrow-right"></i></a>
         </div>
 
         <div class="menu-grid">
             <div class="menu-card reveal">
                 <div class="menu-img-wrap">
-                    <img src="lambdoner.png" alt="Lamb Doner">
+                    <img src="assets/lambdoner.webp" alt="Lamb Doner">
                 </div>
                 <div class="menu-details">
                     <div class="menu-title-row">
@@ -619,7 +621,7 @@
 
             <div class="menu-card reveal" style="transition-delay: 0.1s;">
                 <div class="menu-img-wrap">
-                    <img src="chickenshish.png" alt="Chicken Shish">
+                    <img src="assets/chickenshish.webp" alt="Chicken Shish">
                 </div>
                 <div class="menu-details">
                     <div class="menu-title-row">
@@ -632,7 +634,7 @@
 
             <div class="menu-card reveal" style="transition-delay: 0.2s;">
                 <div class="menu-img-wrap">
-                    <img src="pounder.png" alt="Burger">
+                    <img src="assets/pounder.webp" alt="Burger">
                 </div>
                 <div class="menu-details">
                     <div class="menu-title-row">
@@ -647,7 +649,7 @@
 
     <section id="story" class="split-section">
         <div class="split-media">
-            <img src="van.png" alt="Chef Grilling">
+            <img src="assets/van.webp" alt="Chef Grilling">
             <div style="position: absolute; bottom: 2rem; left: 2rem; background: var(--red); color: white; padding: 1rem; font-family: var(--font-display);">
                 SINCE 1988
             </div>
@@ -681,10 +683,10 @@
                 Need an iconic British street food setting? The van’s distinct red & yellow livery and authentic Thame backdrop make it perfect for film, TV, and commercial shoots.
             </p>
             <br>
-            <a href="#contact" class="btn">Make Filming Enquiry</a>
+            <a href="filming.html" class="btn">Make Filming Enquiry</a>
         </div>
         <div class="split-media">
-            <img src="filming.png" alt="Cinema Set">
+            <img src="assets/filming.webp" alt="Cinema Set">
         </div>
     </section>
 
@@ -720,16 +722,17 @@
     <footer id="contact">
         <!-- Footer Logo Text Replaced with Image -->
         <a href="#" class="footer-logo">
-            <img src="logo.png" alt="Atalay Kebab Logo">
+            <img src="assets/logo.webp" alt="Atalay Kebab Logo">
         </a>
         
         <div class="footer-grid">
             <div class="footer-col">
                 <h5>Explore</h5>
-                <a href="#menu">Full Menu</a>
-                <a href="#story">Our Story</a>
-                <a href="#locations">Locations</a>
-                <a href="#filming">Filming Enquiries</a>
+                <a href="menu.html">Full Menu</a>
+                <a href="ourstory.html">Our Story</a>
+                <a href="locations.html">Locations</a>
+                <a href="filming.html">Filming Enquiries</a>
+                <a href="contact.html">Contact Us</a>
             </div>
             <div class="footer-col">
                 <h5>Contact</h5>
@@ -738,8 +741,8 @@
             </div>
             <div class="footer-col">
                 <h5>Follow</h5>
-                <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a>
-                <a href="#"><i class="fa-brands fa-facebook"></i> Facebook</a>
+                <a href="https://www.instagram.com/atalays_kebab_van/"><i class="fa-brands fa-instagram"></i> Instagram</a>
+                <a href="https://www.facebook.com/Atalayskebabsthame"><i class="fa-brands fa-facebook"></i> Facebook</a>
             </div>
         </div>
         <div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #222; color: #444; font-size: 0.8rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
