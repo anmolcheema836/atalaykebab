@@ -33,49 +33,6 @@
             --gutter: clamp(1.5rem, 5vw, 5rem);
             --nav-height: 80px;
         }
-        /* Allergen Alert Box */
-.allergen-alert {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 1.5rem;
-    padding: 0.8rem 1.5rem;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid #333;
-    border-radius: 4px;
-    color: #999;
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-
-.allergen-alert:hover {
-    border-color: var(--red);
-    color: var(--white);
-    background: rgba(229, 37, 33, 0.1);
-}
-
-/* The Warning Icon (Left) */
-.allergen-alert i:first-child { 
-    color: var(--red); 
-    font-size: 1rem;
-}
-
-/* The Click/Arrow Icon (Right) */
-.allergen-alert .click-arrow {
-    font-size: 0.8rem;
-    color: #666;
-    transition: transform 0.3s ease;
-}
-
-/* Move arrow on hover */
-.allergen-alert:hover .click-arrow {
-    color: var(--white);
-    transform: translateX(3px);
-}
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
@@ -242,13 +199,90 @@
         }
         .category-title { font-size: 2.5rem; margin-bottom: 0; }
         
-        .item-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+        .item-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; }
+        
+        /* Updated Item Card for Images */
         .item-card {
-            background: var(--card-bg); border: 1px solid rgba(255,255,255,0.05);
-            padding: 1.5rem; border-radius: 8px; transition: 0.3s; display: flex; flex-direction: column;
+            background: var(--card-bg); 
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 8px; 
+            transition: 0.3s; 
+            display: flex; 
+            flex-direction: column;
+            overflow: hidden; /* Important for image rounded corners */
+            padding: 0; /* Remove default padding to let image sit flush */
         }
         .item-card:hover { border-color: var(--yellow); transform: translateY(-3px); }
         
+        /* Image Container */
+        .card-image {
+            width: 100%;
+            height: 200px;
+            background: #222;
+            overflow: hidden;
+            position: relative;
+        }
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .item-card:hover .card-image img {
+            transform: scale(1.05);
+        }
+        /* Allergen Alert Box */
+.allergen-alert {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 1.5rem;
+    padding: 0.8rem 1.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid #333;
+    border-radius: 4px;
+    color: #999;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.allergen-alert:hover {
+    border-color: var(--red);
+    color: var(--white);
+    background: rgba(229, 37, 33, 0.1);
+}
+
+/* The Warning Icon (Left) */
+.allergen-alert i:first-child { 
+    color: var(--red); 
+    font-size: 1rem;
+}
+
+/* The Click/Arrow Icon (Right) */
+.allergen-alert .click-arrow {
+    font-size: 0.8rem;
+    color: #666;
+    transition: transform 0.3s ease;
+}
+
+/* Move arrow on hover */
+.allergen-alert:hover .click-arrow {
+    color: var(--white);
+    transform: translateX(3px);
+}
+
+        /* Content Container (Title, Desc, Price) */
+        .card-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
         .item-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.8rem; }
         .item-title { font-family: var(--font-display); font-size: 1.4rem; color: white; letter-spacing: 0.5px; }
         .item-price { color: var(--yellow); font-family: var(--font-display); font-size: 1.3rem; white-space: nowrap; }
@@ -420,7 +454,7 @@
     <p class="menu-subtitle">Legendary street food. Grilled to order.</p>
     
     <!-- UPDATED LINK -->
-    <a href="allergy.html" class="allergen-alert">
+    <a href="allergyinfo.html" class="allergen-alert">
         <i class="fa-solid fa-triangle-exclamation"></i>
         <span>Allergy Guide</span>
         <i class="fa-solid fa-chevron-right click-arrow"></i>
@@ -455,134 +489,197 @@
                 
                 <div class="item-grid">
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Doner</span>
-                            <span class="item-price">£9.60</span>
+                        <div class="card-image">
+                            <!-- REPLACE src with: assets/doner.jpg -->
+                            <img src="assets/menu/lambdoner.png" alt="Lamb Doner">
                         </div>
-                        <p class="item-desc">Lamb doner meat cooked on the upright spit, served in a pitta bread with salad & sauce of your choice.</p>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Doner</span>
+                                <span class="item-price">£9.60</span>
+                            </div>
+                            <p class="item-desc">Lamb doner meat cooked on the upright spit, served in a pitta bread with salad & sauce of your choice.</p>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="item-card">
+                        <div class="card-image">
+                            <!-- REPLACE src with: assets/chicken-kebab.jpg -->
+                            <img src="assets/menu/chickenkebab.png" alt="Chicken Kebab">
+                        </div>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Chicken Kebab</span>
+                                <span class="item-price">£9.40</span>
+                            </div>
+                            <p class="item-desc">Marinated fillets of chicken cooked on a grill. Served in a pitta bread with salad & sauce of your choice.</p>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                        </div>
+                    </div>
+
+                    <div class="item-card">
+                        <div class="card-image">
+                            <!-- REPLACE src with: assets/lamb-shish.jpg -->
+                            <img src="assets/menu/lambshish.png" alt="Lamb Shish">
+                        </div>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Lamb Shish</span>
+                                <span class="item-price">£10.90</span>
+                            </div>
+                            <p class="item-desc">Marinated fillets of lamb cooked on a grill. Served in a pitta bread with salad & sauce of your choice.</p>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                        </div>
+                    </div>
+
+                    <div class="item-card">
+                        <div class="card-image">
+                            <!-- REPLACE src with: assets/mixed-kebab.jpg -->
+                            <img src="assets/menu/mixed.png" alt="Mixed Kebab">
+                        </div>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Mixed Kebab</span>
+                                <span class="item-price">£11.90</span>
+                            </div>
+                            <p class="item-desc">Consisting of lamb shish, chicken shish & lamb doner, served together in a pitta bread, salad & sauce of your choice.</p>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                        </div>
+                    </div>
+
+                    <div class="item-card">
+                        <div class="card-image">
+                            <img src="assets/menu/chickenandchips.png" alt="Chicken & Chips">
+                        </div>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Chicken & Chips</span>
+                                <span class="item-price">£9.40</span>
+                            </div>
+                            <p class="item-desc">Chicken shish served with chips, salad & sauce of your choice.</p>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                        </div>
+                    </div>
+
+                    <div class="item-card">
+                        <div class="card-image">
+                            <img src="assets/menu/donerandchips.png" alt="Doner & Chips">
+                        </div>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Doner & Chips</span>
+                                <span class="item-price">£9.60</span>
+                            </div>
+                            <p class="item-desc">Lamb doner meat served with chips, salad & sauce of your choice.</p>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="item-card">
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Shish & Chips</span>
+                                <span class="item-price">£10.90</span>
+                            </div>
+                            <p class="item-desc">Lamb shish served with chips, salad & sauce of your choice.</p>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                        </div>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Chicken Kebab</span>
-                            <span class="item-price">£9.40</span>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Mixed Meat & Chips</span>
+                                <span class="item-price">£11.90</span>
+                            </div>
+                            <p class="item-desc">Consisting of lamb shish, chicken shish & lamb doner with chips, served together, salad & sauce of your choice.</p>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                         </div>
-                        <p class="item-desc">Marinated fillets of chicken cooked on a grill. Served in a pitta bread with salad & sauce of your choice.</p>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
-                    </div>
-                    <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Lamb Shish</span>
-                            <span class="item-price">£10.90</span>
-                        </div>
-                        <p class="item-desc">Marinated fillets of lamb cooked on a grill. Served in a pitta bread with salad & sauce of your choice.</p>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
-                    </div>
-                    <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Mixed Kebab</span>
-                            <span class="item-price">£11.90</span>
-                        </div>
-                        <p class="item-desc">Consisting of lamb shish, chicken shish & lamb doner, served together in a pitta bread, salad & sauce of your choice.</p>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
-                    </div>
-                    <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Chicken & Chips</span>
-                            <span class="item-price">£9.40</span>
-                        </div>
-                        <p class="item-desc">Chicken shish served with chips, salad & sauce of your choice.</p>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
-                    </div>
-                    <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Doner & Chips</span>
-                            <span class="item-price">£9.60</span>
-                        </div>
-                        <p class="item-desc">Lamb doner meat served with chips, salad & sauce of your choice.</p>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
-                    </div>
-                    <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Shish & Chips</span>
-                            <span class="item-price">£10.90</span>
-                        </div>
-                        <p class="item-desc">Lamb shish served with chips, salad & sauce of your choice.</p>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
-                    </div>
-                    <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Mixed Meat & Chips</span>
-                            <span class="item-price">£11.90</span>
-                        </div>
-                        <p class="item-desc">Consisting of lamb shish, chicken shish & lamb doner with chips, served together, salad & sauce of your choice.</p>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                     </div>
                      <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Box of Doner Meat</span>
-                            <span class="item-price">£9.30</span>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Box of Doner Meat</span>
+                                <span class="item-price">£9.30</span>
+                            </div>
+                            <p class="item-desc">Lamb doner meat in a box, served with salad & sauce of your choice.</p>
+                            <span class="note">No Bread Included</span>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                         </div>
-                        <p class="item-desc">Lamb doner meat in a box, served with salad & sauce of your choice.</p>
-                        <span class="note">No Bread Included</span>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Box of Chicken</span>
-                            <span class="item-price">£9.20</span>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Box of Chicken</span>
+                                <span class="item-price">£9.20</span>
+                            </div>
+                            <p class="item-desc">Marinated pieces of chicken breast in a box, served with salad & sauce of your choice.</p>
+                            <span class="note">No Bread Included</span>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                         </div>
-                        <p class="item-desc">Marinated pieces of chicken breast in a box, served with salad & sauce of your choice.</p>
-                        <span class="note">No Bread Included</span>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Box of Shish</span>
-                            <span class="item-price">£10.50</span>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Box of Shish</span>
+                                <span class="item-price">£10.50</span>
+                            </div>
+                            <p class="item-desc">Lamb shish in a box, served with salad & sauce of your choice.</p>
+                            <span class="note">No Bread Included</span>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                         </div>
-                        <p class="item-desc">Lamb shish in a box, served with salad & sauce of your choice.</p>
-                        <span class="note">No Bread Included</span>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Box of Mixed Meat</span>
-                            <span class="item-price">£11.50</span>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Box of Mixed Meat</span>
+                                <span class="item-price">£11.50</span>
+                            </div>
+                            <p class="item-desc">Consisting of lamb shish, chicken shish & lamb doner, served together in a box, salad & sauce of your choice.</p>
+                            <span class="note">No Bread Included</span>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                         </div>
-                        <p class="item-desc">Consisting of lamb shish, chicken shish & lamb doner, served together in a box, salad & sauce of your choice.</p>
-                        <span class="note">No Bread Included</span>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Falafel Kebab</span>
-                            <span class="item-price">£5.50</span>
+                        <div class="card-image">
+                            <img src="assets/menu/falafel.png" alt="Falafel">
                         </div>
-                        <p class="item-desc">Falafel served in a pitta bread with salad & sauce of your choice.</p>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Falafel Kebab</span>
+                                <span class="item-price">£5.50</span>
+                            </div>
+                            <p class="item-desc">Falafel served in a pitta bread with salad & sauce of your choice.</p>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                        </div>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Popcorn Kebab</span>
-                            <span class="item-price">£6.10</span>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Popcorn Kebab</span>
+                                <span class="item-price">£6.10</span>
+                            </div>
+                            <p class="item-desc">Chicken popcorn served in a pitta bread with salad & sauce of your choice.</p>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                         </div>
-                        <p class="item-desc">Chicken popcorn served in a pitta bread with salad & sauce of your choice.</p>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Chips Kebab</span>
-                            <span class="item-price">£5.50</span>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Chips Kebab</span>
+                                <span class="item-price">£5.50</span>
+                            </div>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                         </div>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Salad Kebab</span>
-                            <span class="item-price">£4.80</span>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Salad Kebab</span>
+                                <span class="item-price">£4.80</span>
+                            </div>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                         </div>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                     </div>
                 </div>
             </section>
@@ -595,103 +692,131 @@
                 </div>
                 <div class="item-grid">
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Chicken & Shish Kebab</span>
-                            <span class="item-price">£10.70</span>
+                         <div class="card-image">
+                            <!-- REPLACE src with: assets/combo-kebab.jpg -->
+                            <img src="assets/menu/combokebab.png" alt="Combo Kebab">
                         </div>
-                        <p class="item-desc">Combination of lamb shish, chicken shish, served together in a pitta bread, salad & sauce of your choice.</p>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Chicken & Shish Kebab</span>
+                                <span class="item-price">£10.70</span>
+                            </div>
+                            <p class="item-desc">Combination of lamb shish, chicken shish, served together in a pitta bread, salad & sauce of your choice.</p>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                        </div>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Doner & Shish Kebab</span>
-                            <span class="item-price">£11.90</span>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Doner & Shish Kebab</span>
+                                <span class="item-price">£11.90</span>
+                            </div>
+                            <p class="item-desc">Combination of lamb shish, lamb doner, served together in a pitta bread, salad & sauce of your choice.</p>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                         </div>
-                        <p class="item-desc">Combination of lamb shish, lamb doner, served together in a pitta bread, salad & sauce of your choice.</p>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Chicken & Doner Kebab</span>
-                            <span class="item-price">£11.60</span>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Chicken & Doner Kebab</span>
+                                <span class="item-price">£11.60</span>
+                            </div>
+                            <p class="item-desc">Combination of chicken shish, lamb doner, served together in a pitta bread, salad & sauce of your choice.</p>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                         </div>
-                        <p class="item-desc">Combination of chicken shish, lamb doner, served together in a pitta bread, salad & sauce of your choice.</p>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Chicken & Shish with Chips</span>
-                            <span class="item-price">£10.70</span>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Chicken & Shish with Chips</span>
+                                <span class="item-price">£10.70</span>
+                            </div>
+                            <p class="item-desc">Combination of lamb shish, chicken shish with chips, served together with salad & sauce of your choice.</p>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                         </div>
-                        <p class="item-desc">Combination of lamb shish, chicken shish with chips, served together with salad & sauce of your choice.</p>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Doner & Shish with Chips</span>
-                            <span class="item-price">£11.90</span>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Doner & Shish with Chips</span>
+                                <span class="item-price">£11.90</span>
+                            </div>
+                            <p class="item-desc">Combination of lamb shish, lamb doner with chips, served together, salad & sauce of your choice.</p>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                         </div>
-                        <p class="item-desc">Combination of lamb shish, lamb doner with chips, served together, salad & sauce of your choice.</p>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Chicken & Doner with Chips</span>
-                            <span class="item-price">£11.60</span>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Chicken & Doner with Chips</span>
+                                <span class="item-price">£11.60</span>
+                            </div>
+                            <p class="item-desc">Combination of Chicken shish, lamb doner with chips, served together, salad & sauce of your choice.</p>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                         </div>
-                        <p class="item-desc">Combination of Chicken shish, lamb doner with chips, served together, salad & sauce of your choice.</p>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Chicken & Shish Wrap</span>
-                            <span class="item-price">£10.70</span>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Chicken & Shish Wrap</span>
+                                <span class="item-price">£10.70</span>
+                            </div>
+                            <p class="item-desc">Combination of chicken and lamb shish, served in a wrap bread with sauce and salad of your choice.</p>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                         </div>
-                        <p class="item-desc">Combination of chicken and lamb shish, served in a wrap bread with sauce and salad of your choice.</p>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Doner & Shish Wrap</span>
-                            <span class="item-price">£11.90</span>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Doner & Shish Wrap</span>
+                                <span class="item-price">£11.90</span>
+                            </div>
+                            <p class="item-desc">Combination of lamb doner, lamb shish, served in a wrap bread with sauce and salad of your choice.</p>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                         </div>
-                        <p class="item-desc">Combination of lamb doner, lamb shish, served in a wrap bread with sauce and salad of your choice.</p>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Chicken & Doner Wrap</span>
-                            <span class="item-price">£11.60</span>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Chicken & Doner Wrap</span>
+                                <span class="item-price">£11.60</span>
+                            </div>
+                            <p class="item-desc">Combination of chicken shish, lamb doner, served in a wrap bread with sauce and salad of your choice.</p>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                         </div>
-                        <p class="item-desc">Combination of chicken shish, lamb doner, served in a wrap bread with sauce and salad of your choice.</p>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Chicken & Lamb Shish Box</span>
-                            <span class="item-price">£10.40</span>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Chicken & Lamb Shish Box</span>
+                                <span class="item-price">£10.40</span>
+                            </div>
+                            <p class="item-desc">Combination of chicken shish, lamb shish, served in a box with sauce and salad of your choice.</p>
+                            <span class="note">No Bread Included</span>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                         </div>
-                        <p class="item-desc">Combination of chicken shish, lamb shish, served in a box with sauce and salad of your choice.</p>
-                        <span class="note">No Bread Included</span>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Doner & Lamb Shish Box</span>
-                            <span class="item-price">£11.60</span>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Doner & Lamb Shish Box</span>
+                                <span class="item-price">£11.60</span>
+                            </div>
+                            <p class="item-desc">Combination of lamb doner, lamb shish, served in a box with sauce and salad of your choice.</p>
+                            <span class="note">No Bread Included</span>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                         </div>
-                        <p class="item-desc">Combination of lamb doner, lamb shish, served in a box with sauce and salad of your choice.</p>
-                        <span class="note">No Bread Included</span>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Chicken & Doner Box</span>
-                            <span class="item-price">£11.30</span>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Chicken & Doner Box</span>
+                                <span class="item-price">£11.30</span>
+                            </div>
+                            <p class="item-desc">Combination of chicken shish, lamb doner, served in a box with sauce and salad of your choice.</p>
+                            <span class="note">No Bread Included</span>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                         </div>
-                        <p class="item-desc">Combination of chicken shish, lamb doner, served in a box with sauce and salad of your choice.</p>
-                        <span class="note">No Bread Included</span>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                     </div>
                 </div>
             </section>
@@ -704,57 +829,87 @@
                 </div>
                 <div class="item-grid">
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Beef Burger</span>
-                            <span class="item-price">£5.40</span>
+                        <div class="card-image">
+                            <!-- REPLACE src with: assets/beef-burger.jpg -->
+                            <img src="assets/menu/beefburger.png" alt="Beef Burger">
                         </div>
-                        <p class="item-desc">1/4lb beef burger served in a bun with salad & sauce of your choice.</p>
-                        <div class="badges"><span class="badge">1/4lb</span><span class="badge">1/2lb</span></div>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Beef Burger</span>
+                                <span class="item-price">£5.40</span>
+                            </div>
+                            <p class="item-desc">1/4lb beef burger served in a bun with salad & sauce of your choice.</p>
+                            <div class="badges"><span class="badge">1/4lb</span><span class="badge">1/2lb</span></div>
+                        </div>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Cheese Burger</span>
-                            <span class="item-price">£5.60</span>
+                        <div class="card-image">
+                            <!-- REPLACE src with: assets/cheese-burger.jpg -->
+                            <img src="assets/menu/cheeseburger.png" alt="Cheese Burger">
                         </div>
-                        <p class="item-desc">1/4lb cheese burger served in a bun with salad & sauce of your choice.</p>
-                        <div class="badges"><span class="badge">1/4lb</span><span class="badge">1/2lb</span></div>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Cheese Burger</span>
+                                <span class="item-price">£5.60</span>
+                            </div>
+                            <p class="item-desc">1/4lb cheese burger served in a bun with salad & sauce of your choice.</p>
+                            <div class="badges"><span class="badge">1/4lb</span><span class="badge">1/2lb</span></div>
+                        </div>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Beef Burger with Doner</span>
-                            <span class="item-price">£6.60</span>
+                        <div class="card-image">
+                            <!-- REPLACE src with: assets/doner-burger.jpg -->
+                            <img src="assets/menu/donerburger.png" alt="Doner Burger">
                         </div>
-                        <p class="item-desc">1/4lb beef burger with doner, served in a bun with salad & sauce of your choice.</p>
-                        <div class="badges"><span class="badge">1/4lb</span></div>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Beef Burger with Doner</span>
+                                <span class="item-price">£6.60</span>
+                            </div>
+                            <p class="item-desc">1/4lb beef burger with doner, served in a bun with salad & sauce of your choice.</p>
+                            <div class="badges"><span class="badge">1/4lb</span></div>
+                        </div>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Beef Burger & Doner</span>
-                            <span class="item-price">£7.60</span>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Beef Burger & Doner</span>
+                                <span class="item-price">£7.60</span>
+                            </div>
+                            <p class="item-desc">1/2lb beef burger with doner, served in a bun with salad & a sauce of your choice.</p>
+                            <div class="badges"><span class="badge">1/2lb</span></div>
                         </div>
-                        <p class="item-desc">1/2lb beef burger with doner, served in a bun with salad & a sauce of your choice.</p>
-                        <div class="badges"><span class="badge">1/2lb</span></div>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Chicken Burger</span>
-                            <span class="item-price">£5.90</span>
+                        <div class="card-image">
+                             <!-- REPLACE src with: assets/chicken-burger.jpg -->
+                             <img src="assets/menu/chickenburger.png" alt="Chicken Burger">
                         </div>
-                        <p class="item-desc">Chicken burger served in a bun with salad & sauce of your choice.</p>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Chicken Burger</span>
+                                <span class="item-price">£5.90</span>
+                            </div>
+                            <p class="item-desc">Chicken burger served in a bun with salad & sauce of your choice.</p>
+                        </div>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Doner Bap</span>
-                            <span class="item-price">£7.10</span>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Doner Bap</span>
+                                <span class="item-price">£7.10</span>
+                            </div>
+                            <p class="item-desc">Lamb doner in a bun with salad & sauce of your choice.</p>
                         </div>
-                        <p class="item-desc">Lamb doner in a bun with salad & sauce of your choice.</p>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Chicken Bap</span>
-                            <span class="item-price">£7.10</span>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Chicken Bap</span>
+                                <span class="item-price">£7.10</span>
+                            </div>
+                            <p class="item-desc">Chicken shish in a bun with salad & sauce of your choice.</p>
                         </div>
-                        <p class="item-desc">Chicken shish in a bun with salad & sauce of your choice.</p>
                     </div>
                 </div>
             </section>
@@ -767,68 +922,92 @@
                 </div>
                 <div class="item-grid">
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Doner Wrap</span>
-                            <span class="item-price">£9.70</span>
+                        <div class="card-image">
+                            <!-- REPLACE src with: assets/doner-wrap.jpg -->
+                            <img src="assets/menu/donerwrap.png" alt="Doner Wrap">
                         </div>
-                        <p class="item-desc">Lamb doner served in a wrap bread with sauce & salad of your choice.</p>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span><span class="badge">XL</span></div>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Doner Wrap</span>
+                                <span class="item-price">£9.70</span>
+                            </div>
+                            <p class="item-desc">Lamb doner served in a wrap bread with sauce & salad of your choice.</p>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span><span class="badge">XL</span></div>
+                        </div>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Chicken Wrap</span>
-                            <span class="item-price">£9.40</span>
+                        <div class="card-image">
+                             <!-- REPLACE src with: assets/chicken-wrap.jpg -->
+                             <img src="assets/menu/chickenwrap.png" alt="Chicken Wrap">
                         </div>
-                        <p class="item-desc">Chicken shish served in a wrap bread with sauce & salad of your choice.</p>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Chicken Wrap</span>
+                                <span class="item-price">£9.40</span>
+                            </div>
+                            <p class="item-desc">Chicken shish served in a wrap bread with sauce & salad of your choice.</p>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                        </div>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Shish Wrap</span>
-                            <span class="item-price">£10.90</span>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Shish Wrap</span>
+                                <span class="item-price">£10.90</span>
+                            </div>
+                            <p class="item-desc">Lamb shish served in a wrap bread with sauce & salad of your choice.</p>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                         </div>
-                        <p class="item-desc">Lamb shish served in a wrap bread with sauce & salad of your choice.</p>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Mixed Wrap</span>
-                            <span class="item-price">£11.90</span>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Mixed Wrap</span>
+                                <span class="item-price">£11.90</span>
+                            </div>
+                            <p class="item-desc">Consisting of lamb shish, chicken shish & lamb doner, served together in a wrap bread with sauce & salad of your choice.</p>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                         </div>
-                        <p class="item-desc">Consisting of lamb shish, chicken shish & lamb doner, served together in a wrap bread with sauce & salad of your choice.</p>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Popcorn Wrap</span>
-                            <span class="item-price">£6.10</span>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Popcorn Wrap</span>
+                                <span class="item-price">£6.10</span>
+                            </div>
+                            <p class="item-desc">Popcorn chicken served in a wrap bread with sauce & salad of your choice.</p>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                         </div>
-                        <p class="item-desc">Popcorn chicken served in a wrap bread with sauce & salad of your choice.</p>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Falafel Wrap</span>
-                            <span class="item-price">£5.50</span>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Falafel Wrap</span>
+                                <span class="item-price">£5.50</span>
+                            </div>
+                            <p class="item-desc">Falafel served in a wrap bread with sauce & salad of your choice.</p>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                         </div>
-                        <p class="item-desc">Falafel served in a wrap bread with sauce & salad of your choice.</p>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Chips Wrap</span>
-                            <span class="item-price">£5.50</span>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Chips Wrap</span>
+                                <span class="item-price">£5.50</span>
+                            </div>
+                            <p class="item-desc">Chips served in a wrap bread with sauce & salad of your choice.</p>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                         </div>
-                        <p class="item-desc">Chips served in a wrap bread with sauce & salad of your choice.</p>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Salad Wrap</span>
-                            <span class="item-price">£4.80</span>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Salad Wrap</span>
+                                <span class="item-price">£4.80</span>
+                            </div>
+                            <p class="item-desc">Salad served in a wrap bread with sauce of your choice.</p>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                         </div>
-                        <p class="item-desc">Salad served in a wrap bread with sauce of your choice.</p>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                     </div>
                 </div>
             </section>
@@ -841,54 +1020,76 @@
                 </div>
                 <div class="item-grid">
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Nuggets and Chips</span>
-                            <span class="item-price">£6.50</span>
+                        <div class="card-image">
+                            <!-- REPLACE src with: assets/nuggets.jpg -->
+                            <img src="assets/menu/nuggets.png" alt="Nuggets">
                         </div>
-                        <p class="item-desc">Chicken nuggets 4 pcs and portion of chips with sauce, served in the same box.</p>
-                        <div class="badges"><span class="badge">4PCS</span></div>
-                    </div>
-                    <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Chicken Nuggets</span>
-                            <span class="item-price">£5.50</span>
-                        </div>
-                        <div class="badges"><span class="badge">6PCS</span></div>
-                    </div>
-                    <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Popcorn Chicken</span>
-                            <span class="item-price">£6.50</span>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Nuggets and Chips</span>
+                                <span class="item-price">£6.50</span>
+                            </div>
+                            <p class="item-desc">Chicken nuggets 4 pcs and portion of chips with sauce, served in the same box.</p>
+                            <div class="badges"><span class="badge">4PCS</span></div>
                         </div>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Chicken Burger</span>
-                            <span class="item-price">£5.90</span>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Chicken Nuggets</span>
+                                <span class="item-price">£5.50</span>
+                            </div>
+                            <div class="badges"><span class="badge">6PCS</span></div>
                         </div>
-                        <p class="item-desc">Chicken fillet burger served in a bun with salad & a sauce of your choice.</p>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Chicken Nuggets & Chips</span>
-                            <span class="item-price">£8.20</span>
+                         <div class="card-image">
+                            <!-- REPLACE src with: assets/popcorn.jpg -->
+                            <img src="assets/menu/popcornchicken.png" alt="Popcorn Chicken">
                         </div>
-                        <p class="item-desc">6PCS of Chicken Nuggets & Chips served together in the same box.</p>
-                        <div class="badges"><span class="badge">6PCS</span></div>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Popcorn Chicken</span>
+                                <span class="item-price">£6.50</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Popcorn Chicken & Chips</span>
-                            <span class="item-price">£9.10</span>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Chicken Burger</span>
+                                <span class="item-price">£5.90</span>
+                            </div>
+                            <p class="item-desc">Chicken fillet burger served in a bun with salad & a sauce of your choice.</p>
                         </div>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Popcorn Chicken Box</span>
-                            <span class="item-price">£7.50</span>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Chicken Nuggets & Chips</span>
+                                <span class="item-price">£8.20</span>
+                            </div>
+                            <p class="item-desc">6PCS of Chicken Nuggets & Chips served together in the same box.</p>
+                            <div class="badges"><span class="badge">6PCS</span></div>
                         </div>
-                        <div class="badges"><span class="badge">LRG</span></div>
+                    </div>
+                    <div class="item-card">
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Popcorn Chicken & Chips</span>
+                                <span class="item-price">£9.10</span>
+                            </div>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                        </div>
+                    </div>
+                    <div class="item-card">
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Popcorn Chicken Box</span>
+                                <span class="item-price">£7.50</span>
+                            </div>
+                            <div class="badges"><span class="badge">LRG</span></div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -901,81 +1102,119 @@
                 </div>
                 <div class="item-grid" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));">
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Chips</span>
-                            <span class="item-price">£2.70</span>
+                        <div class="card-image">
+                             <!-- REPLACE src with: assets/chips.jpg -->
+                             <img src="assets/menu/chips.png" alt="Chips">
                         </div>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
-                    </div>
-                    <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Chips & Cheese</span>
-                            <span class="item-price">£3.60</span>
-                        </div>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
-                    </div>
-                    <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Salad Box</span>
-                            <span class="item-price">£3.80</span>
-                        </div>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
-                    </div>
-                    <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Onion Rings</span>
-                            <span class="item-price">£3.90</span>
-                        </div>
-                        <div class="badges"><span class="badge">10PCS</span></div>
-                    </div>
-                    <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Falafel Box</span>
-                            <span class="item-price">£5.60</span>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Chips</span>
+                                <span class="item-price">£2.70</span>
+                            </div>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                         </div>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Mozzarella Sticks</span>
-                            <span class="item-price">£5.40</span>
+                         <div class="card-image">
+                             <!-- REPLACE src with: assets/chips-cheese.jpg -->
+                             <img src="assets/menu/cheesechips.png" alt="Chips & Cheese">
                         </div>
-                        <div class="badges"><span class="badge">6PCS</span></div>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Chips & Cheese</span>
+                                <span class="item-price">£3.60</span>
+                            </div>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                        </div>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Popcorn Chicken & Chips</span>
-                            <span class="item-price">£9.10</span>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Salad Box</span>
+                                <span class="item-price">£3.80</span>
+                            </div>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                         </div>
-                        <p class="item-desc">Delicious popcorn chicken & chips, served in the same box.</p>
-                        <div class="badges"><span class="badge">SML</span></div>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Pot of Sauce</span>
-                            <span class="item-price">£0.90</span>
+                        <div class="card-image">
+                             <!-- REPLACE src with: assets/onion-rings.jpg -->
+                             <img src="assets/menu/rings.png" alt="Onion Rings">
                         </div>
-                        <p class="item-desc" style="font-size: 0.8rem;">Chilli, Garlic Mayo, BBQ, Ketchup, Mayonnaise, Burger Sauce, Yogurt Mint, Sweet Chilli</p>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Onion Rings</span>
+                                <span class="item-price">£3.90</span>
+                            </div>
+                            <div class="badges"><span class="badge">10PCS</span></div>
+                        </div>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Box of Chillies</span>
-                            <span class="item-price">£1.00</span>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Falafel Box</span>
+                                <span class="item-price">£5.60</span>
+                            </div>
                         </div>
-                        <p class="item-desc" style="font-size: 0.8rem;">Whole, Chopped, or Mixed</p>
                     </div>
                     <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Pitta Bread</span>
-                            <span class="item-price">£0.90</span>
+                        <div class="card-image">
+                             <!-- REPLACE src with: assets/mozzarella-sticks.jpg -->
+                             <img src="assets/menu/sticks.png" alt="Mozzarella Sticks">
                         </div>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Mozzarella Sticks</span>
+                                <span class="item-price">£5.40</span>
+                            </div>
+                            <div class="badges"><span class="badge">6PCS</span></div>
+                        </div>
+                    </div>
+                    <div class="item-card">
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Popcorn Chicken & Chips</span>
+                                <span class="item-price">£9.10</span>
+                            </div>
+                            <p class="item-desc">Delicious popcorn chicken & chips, served in the same box.</p>
+                            <div class="badges"><span class="badge">SML</span></div>
+                        </div>
+                    </div>
+                    <div class="item-card">
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Pot of Sauce</span>
+                                <span class="item-price">£0.90</span>
+                            </div>
+                            <p class="item-desc" style="font-size: 0.8rem;">Chilli, Garlic Mayo, BBQ, Ketchup, Mayonnaise, Burger Sauce, Yogurt Mint, Sweet Chilli</p>
+                        </div>
+                    </div>
+                    <div class="item-card">
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Box of Chillies</span>
+                                <span class="item-price">£1.00</span>
+                            </div>
+                            <p class="item-desc" style="font-size: 0.8rem;">Whole, Chopped, or Mixed</p>
+                        </div>
+                    </div>
+                    <div class="item-card">
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Pitta Bread</span>
+                                <span class="item-price">£0.90</span>
+                            </div>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
+                        </div>
                     </div>
                      <div class="item-card">
-                        <div class="item-header">
-                            <span class="item-title">Wrap Bread</span>
-                            <span class="item-price">£0.90</span>
+                        <div class="card-content">
+                            <div class="item-header">
+                                <span class="item-title">Wrap Bread</span>
+                                <span class="item-price">£0.90</span>
+                            </div>
+                            <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                         </div>
-                        <div class="badges"><span class="badge">SML</span><span class="badge">LRG</span></div>
                     </div>
                 </div>
             </section>
@@ -988,19 +1227,25 @@
                 </div>
                 <div class="item-grid" style="grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));">
                     <div class="item-card" style="text-align: center;">
-                        <span class="item-title" style="display: block; margin-bottom: 0.5rem;">Cans (330ml)</span>
-                        <span class="item-price">£1.50</span>
-                        <p class="item-desc" style="margin-top: 0.5rem;">Coke, Diet Coke, Sprite, Dr Pepper, Rio Tropical, Rubicon Mango, Fanta, Irn Bru, Rubicon Passionfruit</p>
+                        <div class="card-content">
+                            <span class="item-title" style="display: block; margin-bottom: 0.5rem;">Cans (330ml)</span>
+                            <span class="item-price">£1.50</span>
+                            <p class="item-desc" style="margin-top: 0.5rem;">Coke, Diet Coke, Sprite, Dr Pepper, Rio Tropical, Rubicon Mango, Fanta, Irn Bru, Rubicon Passionfruit</p>
+                        </div>
                     </div>
                     <div class="item-card" style="text-align: center;">
-                        <span class="item-title" style="display: block; margin-bottom: 0.5rem;">Water (500ml)</span>
-                        <span class="item-price">£1.50</span>
-                        <p class="item-desc" style="margin-top: 0.5rem;">Still or Sparkling</p>
+                        <div class="card-content">
+                            <span class="item-title" style="display: block; margin-bottom: 0.5rem;">Water (500ml)</span>
+                            <span class="item-price">£1.50</span>
+                            <p class="item-desc" style="margin-top: 0.5rem;">Still or Sparkling</p>
+                        </div>
                     </div>
                     <div class="item-card" style="text-align: center;">
-                        <span class="item-title" style="display: block; margin-bottom: 0.5rem;">Fruit Shoot</span>
-                        <span class="item-price">£1.50</span>
-                        <p class="item-desc" style="margin-top: 0.5rem;">Apple & Blackcurrant</p>
+                        <div class="card-content">
+                            <span class="item-title" style="display: block; margin-bottom: 0.5rem;">Fruit Shoot</span>
+                            <span class="item-price">£1.50</span>
+                            <p class="item-desc" style="margin-top: 0.5rem;">Apple & Blackcurrant</p>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -1025,7 +1270,7 @@
             <div class="info-panel">
                 <div class="info-item">
                     <div class="info-icon"><i class="fa-regular fa-clock"></i></div>
-                    <div class="info-content">
+                   <div class="info-content">
     <h4>OPENING HOURS</h4>
     <p>Tue-Sat: 5pm - 11pm</p>
     <p>Sun: 5pm - 10pm</p>
@@ -1058,7 +1303,6 @@
                 <a href="locations.html">Locations</a>
                 <a href="filming.html">Filming Enquiries</a>
                 <a href="contact.html">Contact Us</a>
-                <a href="allergy.html">Allergen Guide</a>
             </div>
             <div class="footer-col">
                 <h5>Contact</h5>
@@ -1067,8 +1311,8 @@
             </div>
             <div class="footer-col">
                 <h5>Follow</h5>
-                <a href="https://www.instagram.com/atalays_kebab_van/"><i class="fa-brands fa-instagram"></i> Instagram</a>
-                <a href="https://www.facebook.com/Atalayskebabsthame"><i class="fa-brands fa-facebook"></i> Facebook</a>
+                <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a>
+                <a href="#"><i class="fa-brands fa-facebook"></i> Facebook</a>
             </div>
         </div>
         <div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #222; color: #444; font-size: 0.8rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
@@ -1123,7 +1367,6 @@
         subText.innerText = day === 1 ? "Closed Mondays. See you tomorrow!" : "Sorry, we are currently closed.";
     }
 }
-        
         // Active link highlighter on scroll
         const sections = document.querySelectorAll("section");
         const navLi = document.querySelectorAll(".cat-links a");
