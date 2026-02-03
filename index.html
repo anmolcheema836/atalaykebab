@@ -588,7 +588,7 @@
 
     <div class="ticker-wrap">
         <div class="ticker" id="js-ticker">
-            <div class="ticker-item"><i class="fa-solid fa-trophy"></i> TWO TIME BEST KEBAB VAN WINNER</div>
+            <div class="ticker-item"><i class="fa-solid fa-trophy"></i> FOUR TIME BEST KEBAB VAN WINNER</div>
             <div class="ticker-item"><i class="fa-solid fa-star"></i> 5 STAR HYGIENE RATING</div>
             <div class="ticker-item"><i class="fa-solid fa-users"></i> FAMILY RUN SINCE 1988</div>
             <div class="ticker-item"><i class="fa-solid fa-pepper-hot"></i> SECRET CHILLI SAUCE RECIPE</div>
@@ -701,11 +701,12 @@
                         <label>Address</label>
                         Market House, North Street<br>Thame, OX9 3HH
                     </div>
-                    <div>
-                        <label>Open Hours</label>
-                        Tue - Sat: 17:00 - 23:00<br>
-                        <span style="color: #555;">Closed Sun/Mon</span>
-                    </div>
+                  <div>
+    <label>Open Hours</label>
+    Tue - Sat: 17:00 - 23:00<br>
+    Sun: 17:00 - 22:00<br>
+    <span style="color: #555;">Closed Monday</span>
+</div>
                     <div style="margin-top: 2rem; border-left: 3px solid var(--yellow); padding-left: 1rem;">
                         <label style="color: var(--yellow);">Expansion</label>
                         Coming soon to Oxford & High Wycombe.
@@ -783,38 +784,35 @@
         });
 
         // --- SHOP OPEN/CLOSED LOGIC ---
-        function checkOpenStatus() {
-            const indicator = document.getElementById('live-status-indicator');
-            
-            // Get current time in UK Timezone (Europe/London)
-            const ukTimeStr = new Date().toLocaleString("en-US", {timeZone: "Europe/London"});
-            const ukDate = new Date(ukTimeStr);
-            
-            const day = ukDate.getDay(); // 0 = Sunday, 1 = Monday ... 6 = Saturday
-            const hour = ukDate.getHours();
-            
-            // Open Hours: Tue (2) to Sat (6), 17:00 to 23:00
-            // Note: This logic assumes it closes exactly at 23:00
-            
-            let isOpen = false;
-            
-            // Check Day (Tue-Sat)
-            if (day >= 2 && day <= 6) {
-                // Check Hour (17:00 - 22:59)
-                if (hour >= 17 && hour < 23) {
-                    isOpen = true;
-                }
-            }
-            
-            if (isOpen) {
-                indicator.innerHTML = '<i class="fa-solid fa-circle" style="font-size: 0.6rem;"></i> OPEN NOW';
-                indicator.className = 'status-open';
-            } else {
-                indicator.innerHTML = '<i class="fa-solid fa-circle" style="font-size: 0.6rem;"></i> CLOSED';
-                indicator.className = 'status-closed';
-            }
-        }
-        
+      function checkOpenStatus() {
+    const indicator = document.getElementById('live-status-indicator');
+    
+    const ukTimeStr = new Date().toLocaleString("en-US", {timeZone: "Europe/London"});
+    const ukDate = new Date(ukTimeStr);
+    
+    const day = ukDate.getDay(); // 0 = Sunday, 1 = Monday ... 6 = Saturday
+    const hour = ukDate.getHours();
+    
+    let isOpen = false;
+    
+    // Check Day & Hours
+    if (day === 0) { 
+        // Sunday: 17:00 - 22:00
+        if (hour >= 17 && hour < 22) isOpen = true;
+    } else if (day >= 2 && day <= 6) { 
+        // Tue - Sat: 17:00 - 23:00
+        if (hour >= 17 && hour < 23) isOpen = true;
+    } 
+    // Monday (day 1) remains isOpen = false
+    
+    if (isOpen) {
+        indicator.innerHTML = '<i class="fa-solid fa-circle" style="font-size: 0.6rem;"></i> OPEN NOW';
+        indicator.className = 'status-open';
+    } else {
+        indicator.innerHTML = '<i class="fa-solid fa-circle" style="font-size: 0.6rem;"></i> CLOSED';
+        indicator.className = 'status-closed';
+    }
+}
         // Check status every minute
         setInterval(checkOpenStatus, 60000);
     </script>

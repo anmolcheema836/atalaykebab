@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Allergen Menu | Atalay Kebab Van</title>
+    
+    <!-- Performance Hints -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@300;500;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- 0. VARIABLES & CORE --- */
+        :root {
+            --red: #E52521;
+            --yellow: #F7C500;
+            --orange: #e67e22; /* High visibility for allergens */
+            --black: #0a0a0a;
+            --card-bg: #1a1a1a;
+            --white: #ffffff;
+            
+            --font-display: 'Anton', sans-serif;
+            --font-body: 'Manrope', sans-serif;
+            
+            --gutter: clamp(1.5rem, 5vw, 5rem);
+            --nav-height: 80px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: var(--black);
+            color: var(--white);
+            font-family: var(--font-body);
+            padding-top: var(--nav-height);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- 1. FX --- */
+        .grain {
+            position: fixed; inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            pointer-events: none; z-index: 9999;
+        }
+
+        h1, h2, h3 { font-family: var(--font-display); text-transform: uppercase; letter-spacing: 1px; }
+
+        /* --- 2. NAVIGATION --- */
+        nav {
+            position: fixed; top: 0; left: 0; width: 100%; height: var(--nav-height);
+            padding: 0 var(--gutter); z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(10, 10, 10, 0.95); backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .logo { display: flex; align-items: center; text-decoration: none; }
+        .logo img { height: 60px; width: auto; }
+        .nav-items { display: flex; gap: 3rem; align-items: center; }
+        .nav-items a { color: rgba(255,255,255,0.7); text-decoration: none; font-weight: 500; font-size: 0.9rem; text-transform: uppercase; }
+        .nav-items a:hover { color: var(--white); }
+        .nav-items a.btn { color: var(--black); padding: 0.7rem 1.5rem; background: white; }
+        .nav-items a.btn:hover { background: var(--red); color: white; }
+        .hamburger { display: none; font-size: 1.5rem; color: white; cursor: pointer; }
+
+        /* --- 3. ALLERGEN HEADER --- */
+        .allergen-header {
+            padding: 4rem var(--gutter) 2rem;
+            text-align: center;
+            background: linear-gradient(to bottom, #111 0%, transparent 100%);
+            border-bottom: 1px solid #222;
+        }
+        .allergen-header h1 { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 0.5rem; }
+        .allergen-header h1 span { color: var(--red); }
+        .disclaimer-box {
+            max-width: 800px; margin: 2rem auto 0;
+            padding: 1.5rem;
+            background: rgba(231, 76, 60, 0.1);
+            border: 1px solid var(--red);
+            border-radius: 8px;
+            text-align: left;
+        }
+        .disclaimer-box h4 { color: var(--red); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 10px; }
+
+        /* --- 4. MENU GRID --- */
+        .menu-container {
+            max-width: 1200px; margin: 0 auto; padding: 4rem var(--gutter);
+        }
+        
+        .section-title {
+            font-size: 2rem; border-bottom: 1px solid #333; padding-bottom: 0.5rem; margin-bottom: 2rem; margin-top: 3rem;
+        }
+
+        .allergy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .allergy-card {
+            background: var(--card-bg);
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .item-name { font-family: var(--font-display); font-size: 1.3rem; color: white; letter-spacing: 0.5px; margin-bottom: 0.5rem; }
+        .item-desc { font-size: 0.9rem; color: #888; margin-bottom: 1rem; line-height: 1.4; }
+        
+        /* The Highlighted Allergen Section */
+        .contains-section {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #333;
+            font-size: 0.9rem;
+        }
+        .contains-label {
+            color: #888; font-weight: 700; text-transform: uppercase; font-size: 0.8rem;
+        }
+        .allergen-list {
+            color: var(--orange); /* Bright Orange for visibility */
+            font-weight: 700;
+            margin-top: 0.2rem;
+            display: block;
+        }
+        .allergen-none { color: var(--green); font-weight: 700; }
+
+        /* --- 5. FOOTER --- */
+        footer { padding: 4rem var(--gutter); background: #050505; border-top: 1px solid #222; margin-top: 4rem; }
+        .footer-logo img { height: 60px; margin-bottom: 2rem; }
+        .footer-links a { color: #888; text-decoration: none; margin-right: 2rem; font-size: 0.9rem; }
+        .footer-links a:hover { color: var(--red); }
+
+        @media (max-width: 900px) {
+            .nav-items { display: none; }
+            .hamburger { display: block; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="grain"></div>
+
+    <nav>
+        <a href="index.html" class="logo">
+            <img src="assets/logo.webp" alt="Atalay Logo">
+        </a>
+        <div class="nav-items">
+            <a href="menu.html">Standard Menu</a>
+            <a href="contact.html">Contact Us</a>
+            <a href="menu.html" class="btn">Back to Menu</a>
+        </div>
+        <div class="hamburger"><i class="fa-solid fa-bars"></i></div>
+    </nav>
+
+    <header class="allergen-header">
+        <h1>ALLERGEN <span>MATRIX</span></h1>
+        <p style="color: #aaa;">Detailed allergen information for every item on our menu.</p>
+        
+        <div class="disclaimer-box">
+            <h4><i class="fa-solid fa-circle-exclamation"></i> IMPORTANT ADVICE</h4>
+            <p style="font-size: 0.9rem; line-height: 1.5; color: #ddd;">
+                Please inform our staff of any allergies before ordering. <br>
+                While we take every precaution, our kitchen handles <strong>Gluten, Milk, Eggs, Soya, Mustard, Sesame, and Sulphites</strong>. We cannot guarantee any item is 100% allergen-free due to the risk of cross-contamination.
+                <br><br>
+                <strong>Sauces:</strong> Please note that sauces are added separately and contain their own allergens (e.g., Yogurt Sauce contains Milk, Mayo contains Egg/Mustard).
+            </p>
+        </div>
+    </header>
+
+    <div class="menu-container">
+
+        <!-- KEBABS -->
+        <h2 class="section-title">Kebabs</h2>
+        <div class="allergy-grid">
+            <div class="allergy-card">
+                <div>
+                    <div class="item-name">Doner Kebab</div>
+                    <div class="item-desc">Lamb doner meat, pitta bread, salad.</div>
+                </div>
+                <div class="contains-section">
+                    <span class="contains-label">Contains:</span>
+                    <span class="allergen-list">Cereals (Gluten), Milk, Soya, Sulphites, Mustard</span>
+                </div>
+            </div>
+            <div class="allergy-card">
+                <div>
+                    <div class="item-name">Chicken Kebab</div>
+                    <div class="item-desc">Marinated chicken, pitta bread, salad.</div>
+                </div>
+                <div class="contains-section">
+                    <span class="contains-label">Contains:</span>
+                    <span class="allergen-list">Cereals (Gluten), Milk (Marinade)</span>
+                </div>
+            </div>
+            <div class="allergy-card">
+                <div>
+                    <div class="item-name">Lamb Shish</div>
+                    <div class="item-desc">Marinated lamb, pitta bread, salad.</div>
+                </div>
+                <div class="contains-section">
+                    <span class="contains-label">Contains:</span>
+                    <span class="allergen-list">Cereals (Gluten), Milk (Marinade)</span>
+                </div>
+            </div>
+            <div class="allergy-card">
+                <div>
+                    <div class="item-name">Mixed Kebab</div>
+                    <div class="item-desc">Doner, Chicken & Shish in pitta.</div>
+                </div>
+                <div class="contains-section">
+                    <span class="contains-label">Contains:</span>
+                    <span class="allergen-list">Cereals (Gluten), Milk, Soya, Sulphites, Mustard</span>
+                </div>
+            </div>
+            <div class="allergy-card">
+                <div>
+                    <div class="item-name">Box of Doner Meat</div>
+                    <div class="item-desc">Just meat and salad (No Bread).</div>
+                </div>
+                <div class="contains-section">
+                    <span class="contains-label">Contains:</span>
+                    <span class="allergen-list">Milk, Soya, Sulphites, Mustard</span>
+                </div>
+            </div>
+            <div class="allergy-card">
+                <div>
+                    <div class="item-name">Falafel Kebab</div>
+                    <div class="item-desc">Falafel in pitta.</div>
+                </div>
+                <div class="contains-section">
+                    <span class="contains-label">Contains:</span>
+                    <span class="allergen-list">Cereals (Gluten), Sesame</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- COMBOS -->
+        <h2 class="section-title">Combos</h2>
+        <div class="allergy-grid">
+            <div class="allergy-card">
+                <div>
+                    <div class="item-name">Chicken & Shish Combo</div>
+                    <div class="item-desc">Served in pitta.</div>
+                </div>
+                <div class="contains-section">
+                    <span class="contains-label">Contains:</span>
+                    <span class="allergen-list">Cereals (Gluten), Milk</span>
+                </div>
+            </div>
+            <div class="allergy-card">
+                <div>
+                    <div class="item-name">Doner & Shish Combo</div>
+                    <div class="item-desc">Served in pitta.</div>
+                </div>
+                <div class="contains-section">
+                    <span class="contains-label">Contains:</span>
+                    <span class="allergen-list">Cereals (Gluten), Milk, Soya, Sulphites, Mustard</span>
+                </div>
+            </div>
+            <div class="allergy-card">
+                <div>
+                    <div class="item-name">Combo Box (No Bread)</div>
+                    <div class="item-desc">Meat and salad only.</div>
+                </div>
+                <div class="contains-section">
+                    <span class="contains-label">Contains:</span>
+                    <span class="allergen-list">Milk, Soya, Sulphites, Mustard</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- BURGERS -->
+        <h2 class="section-title">Burgers</h2>
+        <div class="allergy-grid">
+            <div class="allergy-card">
+                <div>
+                    <div class="item-name">Beef Burger</div>
+                    <div class="item-desc">Served in a bun.</div>
+                </div>
+                <div class="contains-section">
+                    <span class="contains-label">Contains:</span>
+                    <span class="allergen-list">Cereals (Gluten), Sesame, Soya, Sulphites</span>
+                </div>
+            </div>
+            <div class="allergy-card">
+                <div>
+                    <div class="item-name">Cheese Burger</div>
+                    <div class="item-desc">Served in a bun with cheese.</div>
+                </div>
+                <div class="contains-section">
+                    <span class="contains-label">Contains:</span>
+                    <span class="allergen-list">Cereals (Gluten), Sesame, Soya, Sulphites, Milk</span>
+                </div>
+            </div>
+            <div class="allergy-card">
+                <div>
+                    <div class="item-name">Chicken Burger</div>
+                    <div class="item-desc">Coated chicken in a bun.</div>
+                </div>
+                <div class="contains-section">
+                    <span class="contains-label">Contains:</span>
+                    <span class="allergen-list">Cereals (Gluten), Sesame, Celery, Mustard</span>
+                </div>
+            </div>
+            <div class="allergy-card">
+                <div>
+                    <div class="item-name">Doner Bap</div>
+                    <div class="item-desc">Doner meat in a soft bun.</div>
+                </div>
+                <div class="contains-section">
+                    <span class="contains-label">Contains:</span>
+                    <span class="allergen-list">Cereals (Gluten), Sesame, Milk, Soya, Sulphites, Mustard</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- WRAPS -->
+        <h2 class="section-title">Wraps</h2>
+        <div class="allergy-grid">
+            <div class="allergy-card">
+                <div>
+                    <div class="item-name">Doner Wrap</div>
+                    <div class="item-desc">Served in a tortilla wrap.</div>
+                </div>
+                <div class="contains-section">
+                    <span class="contains-label">Contains:</span>
+                    <span class="allergen-list">Cereals (Gluten), Milk, Soya, Sulphites, Mustard</span>
+                </div>
+            </div>
+            <div class="allergy-card">
+                <div>
+                    <div class="item-name">Chicken Wrap</div>
+                    <div class="item-desc">Served in a tortilla wrap.</div>
+                </div>
+                <div class="contains-section">
+                    <span class="contains-label">Contains:</span>
+                    <span class="allergen-list">Cereals (Gluten), Milk</span>
+                </div>
+            </div>
+             <div class="allergy-card">
+                <div>
+                    <div class="item-name">Falafel Wrap</div>
+                    <div class="item-desc">Served in a tortilla wrap.</div>
+                </div>
+                <div class="contains-section">
+                    <span class="contains-label">Contains:</span>
+                    <span class="allergen-list">Cereals (Gluten), Sesame</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHICKEN & SIDES -->
+        <h2 class="section-title">Chicken & Extras</h2>
+        <div class="allergy-grid">
+            <div class="allergy-card">
+                <div>
+                    <div class="item-name">Chicken Nuggets</div>
+                    <div class="item-desc">Coated chicken breast chunks.</div>
+                </div>
+                <div class="contains-section">
+                    <span class="contains-label">Contains:</span>
+                    <span class="allergen-list">Cereals (Gluten), Celery</span>
+                </div>
+            </div>
+            <div class="allergy-card">
+                <div>
+                    <div class="item-name">Popcorn Chicken</div>
+                    <div class="item-desc">Battered chicken bites.</div>
+                </div>
+                <div class="contains-section">
+                    <span class="contains-label">Contains:</span>
+                    <span class="allergen-list">Cereals (Gluten), Celery, Mustard</span>
+                </div>
+            </div>
+            <div class="allergy-card">
+                <div>
+                    <div class="item-name">Mozzarella Sticks</div>
+                    <div class="item-desc">Breaded cheese sticks.</div>
+                </div>
+                <div class="contains-section">
+                    <span class="contains-label">Contains:</span>
+                    <span class="allergen-list">Cereals (Gluten), Milk</span>
+                </div>
+            </div>
+            <div class="allergy-card">
+                <div>
+                    <div class="item-name">Onion Rings</div>
+                    <div class="item-desc">Battered onion rings.</div>
+                </div>
+                <div class="contains-section">
+                    <span class="contains-label">Contains:</span>
+                    <span class="allergen-list">Cereals (Gluten), Mustard</span>
+                </div>
+            </div>
+            <div class="allergy-card">
+                <div>
+                    <div class="item-name">Chips / Chips & Cheese</div>
+                </div>
+                <div class="contains-section">
+                    <span class="contains-label">Contains:</span>
+                    <span class="allergen-list">Cheese option contains Milk. (Check oil for cross-contamination)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SAUCES -->
+        <h2 class="section-title">Sauces</h2>
+        <div class="allergy-grid">
+             <div class="allergy-card">
+                <div class="item-name">Garlic Mayo / Mayo</div>
+                <div class="contains-section">
+                    <span class="contains-label">Contains:</span>
+                    <span class="allergen-list">Eggs, Mustard</span>
+                </div>
+            </div>
+            <div class="allergy-card">
+                <div class="item-name">Yogurt Mint Sauce</div>
+                <div class="contains-section">
+                    <span class="contains-label">Contains:</span>
+                    <span class="allergen-list">Milk, Eggs</span>
+                </div>
+            </div>
+             <div class="allergy-card">
+                <div class="item-name">Burger Sauce</div>
+                <div class="contains-section">
+                    <span class="contains-label">Contains:</span>
+                    <span class="allergen-list">Eggs, Mustard, Celery</span>
+                </div>
+            </div>
+            <div class="allergy-card">
+                <div class="item-name">Chilli Sauce / Ketchup / BBQ</div>
+                <div class="contains-section">
+                    <span class="contains-label">Contains:</span>
+                    <span class="allergen-list">Check label (Usually Sulphites/Celery/Mustard)</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <a href="index.html" class="footer-logo">
+            <img src="assets/logo.webp" alt="Atalay Logo">
+        </a>
+        <div class="footer-links">
+            <a href="menu.html">Full Menu</a>
+            <a href="contact.html">Contact</a>
+            <a href="https://www.atalaykebabvan.co.uk/" style="color: var(--white);">Order Online</a>
+        </div>
+        <div style="margin-top: 2rem; color: #444; font-size: 0.8rem;">
+            © 2026 Atalay Kebab Van. <br>
+            Food allergy data is for informational purposes only. Ingredients may change.
+        </div>
+    </footer>
+
+</body>
+</html>
