@@ -33,6 +33,49 @@
             --gutter: clamp(1.5rem, 5vw, 5rem);
             --nav-height: 80px;
         }
+        /* Allergen Alert Box */
+.allergen-alert {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 1.5rem;
+    padding: 0.8rem 1.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid #333;
+    border-radius: 4px;
+    color: #999;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.allergen-alert:hover {
+    border-color: var(--red);
+    color: var(--white);
+    background: rgba(229, 37, 33, 0.1);
+}
+
+/* The Warning Icon (Left) */
+.allergen-alert i:first-child { 
+    color: var(--red); 
+    font-size: 1rem;
+}
+
+/* The Click/Arrow Icon (Right) */
+.allergen-alert .click-arrow {
+    font-size: 0.8rem;
+    color: #666;
+    transition: transform 0.3s ease;
+}
+
+/* Move arrow on hover */
+.allergen-alert:hover .click-arrow {
+    color: var(--white);
+    transform: translateX(3px);
+}
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
@@ -373,9 +416,17 @@
 
     <!-- Menu Header -->
     <header class="menu-header">
-        <h1>OUR <span>MENU</span></h1>
-        <p class="menu-subtitle">Legendary street food. Grilled to order.</p>
-    </header>
+    <h1>OUR <span>MENU</span></h1>
+    <p class="menu-subtitle">Legendary street food. Grilled to order.</p>
+    
+    <!-- UPDATED LINK -->
+    <a href="allergy.html" class="allergen-alert">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <span>Allergy Guide</span>
+        <i class="fa-solid fa-chevron-right click-arrow"></i>
+    </a>
+    
+</header>
 
     <div class="menu-layout">
         
